@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32724B7C1AF158F900DFD5FF /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */; };
+		32724B7E1AF15A5E00DFD5FF /* settings.h in Resources */ = {isa = PBXBuildFile; fileRef = 32724B7D1AF15A5E00DFD5FF /* settings.h */; };
+		32724B811AF1719E00DFD5FF /* YWCNewsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B801AF1719E00DFD5FF /* YWCNewsTableViewController.m */; };
+		32724B841AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B831AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.m */; };
+		32724B871AF1726700DFD5FF /* YWCMyNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B861AF1726700DFD5FF /* YWCMyNewsTableViewCell.m */; };
+		32724B8A1AF172E700DFD5FF /* YWCNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B891AF172E700DFD5FF /* YWCNewViewController.m */; };
+		32724B8D1AF173A700DFD5FF /* YWCNewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B8C1AF173A700DFD5FF /* YWCNewsModel.m */; };
+		32724B911AF1746A00DFD5FF /* YWCProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B901AF1746A00DFD5FF /* YWCProfile.m */; };
+		32724B941AF174CD00DFD5FF /* YWCLibraryNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B931AF174CD00DFD5FF /* YWCLibraryNews.m */; };
+		32724B961AF18A6100DFD5FF /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B951AF18A6100DFD5FF /* ViewController.xib */; };
+		32724B981AF18AA900DFD5FF /* YWCNewsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B971AF18AA900DFD5FF /* YWCNewsTableViewController.xib */; };
+		32724B9A1AF18AEB00DFD5FF /* YWCNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */; };
+		32724B9C1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B9B1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib */; };
+		32724B9E1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B9D1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib */; };
 		32E793501AF1584E00F8F558 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E7934F1AF1584E00F8F558 /* main.m */; };
 		32E793531AF1584E00F8F558 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E793521AF1584E00F8F558 /* AppDelegate.m */; };
 		32E793561AF1584E00F8F558 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E793551AF1584E00F8F558 /* ViewController.m */; };
@@ -27,6 +41,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMobileServices.framework; path = scoopNews/WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
+		32724B7D1AF15A5E00DFD5FF /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
+		32724B7F1AF1719E00DFD5FF /* YWCNewsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCNewsTableViewController.h; sourceTree = "<group>"; };
+		32724B801AF1719E00DFD5FF /* YWCNewsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCNewsTableViewController.m; sourceTree = "<group>"; };
+		32724B821AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCGeneralNewsTableViewCell.h; sourceTree = "<group>"; };
+		32724B831AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCGeneralNewsTableViewCell.m; sourceTree = "<group>"; };
+		32724B851AF1726700DFD5FF /* YWCMyNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCMyNewsTableViewCell.h; sourceTree = "<group>"; };
+		32724B861AF1726700DFD5FF /* YWCMyNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCMyNewsTableViewCell.m; sourceTree = "<group>"; };
+		32724B881AF172E700DFD5FF /* YWCNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCNewViewController.h; sourceTree = "<group>"; };
+		32724B891AF172E700DFD5FF /* YWCNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCNewViewController.m; sourceTree = "<group>"; };
+		32724B8B1AF173A700DFD5FF /* YWCNewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCNewsModel.h; sourceTree = "<group>"; };
+		32724B8C1AF173A700DFD5FF /* YWCNewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCNewsModel.m; sourceTree = "<group>"; };
+		32724B8F1AF1746A00DFD5FF /* YWCProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCProfile.h; sourceTree = "<group>"; };
+		32724B901AF1746A00DFD5FF /* YWCProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCProfile.m; sourceTree = "<group>"; };
+		32724B921AF174CD00DFD5FF /* YWCLibraryNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCLibraryNews.h; sourceTree = "<group>"; };
+		32724B931AF174CD00DFD5FF /* YWCLibraryNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCLibraryNews.m; sourceTree = "<group>"; };
+		32724B951AF18A6100DFD5FF /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		32724B971AF18AA900DFD5FF /* YWCNewsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCNewsTableViewController.xib; sourceTree = "<group>"; };
+		32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCNewViewController.xib; sourceTree = "<group>"; };
+		32724B9B1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCMyNewsTableViewCell.xib; sourceTree = "<group>"; };
+		32724B9D1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCGeneralNewsTableViewCell.xib; sourceTree = "<group>"; };
 		32E7934A1AF1584E00F8F558 /* scoopNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scoopNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E7934E1AF1584E00F8F558 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E7934F1AF1584E00F8F558 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -47,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32724B7C1AF158F900DFD5FF /* WindowsAzureMobileServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,9 +96,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32724B8E1AF173AB00DFD5FF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				32724B8B1AF173A700DFD5FF /* YWCNewsModel.h */,
+				32724B8C1AF173A700DFD5FF /* YWCNewsModel.m */,
+				32724B8F1AF1746A00DFD5FF /* YWCProfile.h */,
+				32724B901AF1746A00DFD5FF /* YWCProfile.m */,
+				32724B921AF174CD00DFD5FF /* YWCLibraryNews.h */,
+				32724B931AF174CD00DFD5FF /* YWCLibraryNews.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		32724B9F1AF1912000DFD5FF /* Celdas */ = {
+			isa = PBXGroup;
+			children = (
+				32724B821AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.h */,
+				32724B831AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.m */,
+				32724B9D1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib */,
+				32724B851AF1726700DFD5FF /* YWCMyNewsTableViewCell.h */,
+				32724B861AF1726700DFD5FF /* YWCMyNewsTableViewCell.m */,
+				32724B9B1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib */,
+			);
+			name = Celdas;
+			sourceTree = "<group>";
+		};
 		32E793411AF1584E00F8F558 = {
 			isa = PBXGroup;
 			children = (
+				32724B7D1AF15A5E00DFD5FF /* settings.h */,
+				32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */,
 				32E7934C1AF1584E00F8F558 /* scoopNews */,
 				32E793661AF1584F00F8F558 /* scoopNewsTests */,
 				32E7934B1AF1584E00F8F558 /* Products */,
@@ -85,10 +149,19 @@
 				32E793521AF1584E00F8F558 /* AppDelegate.m */,
 				32E793541AF1584E00F8F558 /* ViewController.h */,
 				32E793551AF1584E00F8F558 /* ViewController.m */,
+				32724B951AF18A6100DFD5FF /* ViewController.xib */,
 				32E793571AF1584F00F8F558 /* Main.storyboard */,
 				32E7935A1AF1584F00F8F558 /* Images.xcassets */,
 				32E7935C1AF1584F00F8F558 /* LaunchScreen.xib */,
 				32E7934D1AF1584E00F8F558 /* Supporting Files */,
+				32724B7F1AF1719E00DFD5FF /* YWCNewsTableViewController.h */,
+				32724B801AF1719E00DFD5FF /* YWCNewsTableViewController.m */,
+				32724B971AF18AA900DFD5FF /* YWCNewsTableViewController.xib */,
+				32724B881AF172E700DFD5FF /* YWCNewViewController.h */,
+				32724B891AF172E700DFD5FF /* YWCNewViewController.m */,
+				32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */,
+				32724B9F1AF1912000DFD5FF /* Celdas */,
+				32724B8E1AF173AB00DFD5FF /* Models */,
 			);
 			path = scoopNews;
 			sourceTree = "<group>";
@@ -199,8 +272,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32724B961AF18A6100DFD5FF /* ViewController.xib in Resources */,
 				32E793591AF1584F00F8F558 /* Main.storyboard in Resources */,
+				32724B7E1AF15A5E00DFD5FF /* settings.h in Resources */,
 				32E7935E1AF1584F00F8F558 /* LaunchScreen.xib in Resources */,
+				32724B9E1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib in Resources */,
+				32724B9C1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib in Resources */,
+				32724B981AF18AA900DFD5FF /* YWCNewsTableViewController.xib in Resources */,
+				32724B9A1AF18AEB00DFD5FF /* YWCNewViewController.xib in Resources */,
 				32E7935B1AF1584F00F8F558 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,9 +298,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32724B871AF1726700DFD5FF /* YWCMyNewsTableViewCell.m in Sources */,
 				32E793561AF1584E00F8F558 /* ViewController.m in Sources */,
+				32724B8D1AF173A700DFD5FF /* YWCNewsModel.m in Sources */,
 				32E793531AF1584E00F8F558 /* AppDelegate.m in Sources */,
+				32724B811AF1719E00DFD5FF /* YWCNewsTableViewController.m in Sources */,
+				32724B8A1AF172E700DFD5FF /* YWCNewViewController.m in Sources */,
 				32E793501AF1584E00F8F558 /* main.m in Sources */,
+				32724B911AF1746A00DFD5FF /* YWCProfile.m in Sources */,
+				32724B941AF174CD00DFD5FF /* YWCLibraryNews.m in Sources */,
+				32724B841AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +435,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/scoopNews",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = scoopNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -359,6 +450,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/scoopNews",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = scoopNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -418,6 +514,7 @@
 				32E7936F1AF1584F00F8F558 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		32E793701AF1584F00F8F558 /* Build configuration list for PBXNativeTarget "scoopNewsTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +523,7 @@
 				32E793721AF1584F00F8F558 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

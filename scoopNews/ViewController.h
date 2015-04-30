@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 @interface ViewController : UIViewController
 
-
+-(id)initWithClient:(MSClient *)client andTable:(MSTable *)table;
 @end
 
