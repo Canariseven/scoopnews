@@ -24,10 +24,11 @@
 @end
 
 @implementation YWCNewViewController
--(id)initWithClient:(MSClient *)client userProfile:(YWCProfile *)userProfile{
+-(id)initWithClient:(MSClient *)client userProfile:(YWCProfile *)userProfile andLibrary:(YWCLibraryNews *)library{
     if (self = [super initWithNibName:nil bundle:nil]) {
         _client = client;
         _userProfile = userProfile;
+        _libraryNews = library;
     }
     return self;
 }
@@ -184,6 +185,7 @@ didCompleteWithError:(NSError *)error
     MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.client];
     
     NSDictionary *dict = [YWCNewsModel dictionaryWithModel:self.model];
+
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
         if (!error) {
             NSUInteger index = [self.libraryNews.myNews count];

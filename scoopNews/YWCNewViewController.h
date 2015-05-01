@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @import Foundation;
 @class YWCProfile;
+@class YWCLibraryNews;
 @interface YWCNewViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UITextView *textNew;
@@ -17,6 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profilePhoto;
 - (IBAction)publiButton:(id)sender;
 - (IBAction)locationButton:(id)sender;
--(id)initWithClient:(MSClient *)client userProfile:(YWCProfile *)userProfile;
+-(id)initWithClient:(MSClient *)client userProfile:(YWCProfile *)userProfile andLibrary:(YWCLibraryNews *)library;
 
 @end

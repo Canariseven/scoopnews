@@ -39,7 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     
     if ([self.modePresent  isEqual: @"ALLNEWS"]) {
         UINib *nib = [UINib nibWithNibName:@"YWCGeneralNewsTableViewCell" bundle:nil];
@@ -48,11 +48,7 @@
         UINib *nib = [UINib nibWithNibName:@"YWCMyNewsTableViewCell" bundle:nil];
         [self.tableView registerNib:nib forCellReuseIdentifier:@"owNewsCellID"];
     }
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     if (self.arrayModel.user != nil) {
         UIBarButtonItem *add = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self
                                                                             action:@selector(addNew:)];
@@ -65,11 +61,13 @@
     [super viewWillAppear:animated];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self setupKVO];
+
+    [self.tableView reloadData];
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [self tearDownKVO];
+
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -109,27 +107,11 @@
 }
 
 -(void)addNew:(id)sender{
-    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithClient:self.client userProfile:self.arrayModel.user];
+    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithClient:self.client userProfile:self.arrayModel.user andLibrary:self.arrayModel];
     [self.navigationController pushViewController:newVC animated:YES];
     
 }
 
-
--(void)setupKVO{
-    [self.arrayModel addObserver:self
-                      forKeyPath:@"allNews"
-                         options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                         context:NULL];
-}
--(void)tearDownKVO{
-    [self.arrayModel removeObserver:self forKeyPath:@"allNews"];
-}
--(void)observeValueForKeyPath:(NSString *)keyPath
-                     ofObject:(id)object
-                       change:(NSDictionary *)change
-                      context:(void *)context{
-    [self.tableView reloadData];
-}
 
 #pragma mark - YWCLibraryNewsDelegate
 -(void)libraryNews:(YWCLibraryNews *)libraryNews{

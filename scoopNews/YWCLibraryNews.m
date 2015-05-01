@@ -11,6 +11,14 @@
 #import "YWCNewsModel.h"
 @implementation YWCLibraryNews
 
+
+-(void)addAllNewsObject:(NSObject *)object{
+    [self.allNews insertObject:object atIndex:self.allNews.count];
+}
+-(void)addMyNewsObject:(NSObject *)object{
+    [self.myNews insertObject:object atIndex:self.myNews.count];
+}
+
 -(id)initWithUser:(YWCProfile *)user{
     if (self = [super init]) {
         _user = user;
@@ -31,7 +39,7 @@
             for (id item in datosAzure) {
                 NSLog(@"item -> %@", item);
                 YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item];
-                [self.allNews addObject:new];
+                [self addAllNewsObject:new];
                 
             }
             [self.delegate libraryNews:self];
@@ -51,7 +59,7 @@
             for (id item in datosAzure) {
                 NSLog(@"item -> %@", item);
                 YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item];
-                [self.myNews addObject:new];
+                [self addMyNewsObject:new];
                 
             }
             [self.delegate libraryNews:self];

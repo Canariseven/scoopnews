@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.profile = [[YWCProfile alloc]initWithClient:self.client];
-
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -53,8 +53,14 @@
     if (![self.profile loadUserAuthInfo]) {
         // NO LOGIN
         self.myNewsButton.enabled = NO;
+        [self.myNewsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        
         [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
         [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        self.imageProfile.image = nil;
+        self.userNameLabel.text = @"Realiza Login";
+        
     }else{
         self.myNewsButton.enabled = YES;
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
@@ -63,6 +69,7 @@
         [self.profile getUserInfo];
         self.userNameLabel.text = self.profile.nameUser;
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,9 +79,9 @@
 
 - (IBAction)allNews:(id)sender {
     YWCLibraryNews *lVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
-
+    
     [lVC getAllNewsFromAzureWithClient:self.client andTable:self.table];
-
+    
     YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:lVC withClient:self.client andTable:self.table mode:@"ALLNEWS"];
     
     // DELEGADO YWCLibraryNewsDelegate
@@ -107,16 +114,16 @@
     NSArray *arr = [self.profile observableKeyNames];
     for (NSString *key in arr) {
         [self.profile addObserver:self
-                           forKeyPath:key
-                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                              context:NULL];
+                       forKeyPath:key
+                          options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                          context:NULL];
     }
 }
 -(void)tearDownKVO{
     NSArray *arr = [self.profile observableKeyNames];
     for (NSString *key in arr) {
         [self.profile removeObserver:self
-                              forKeyPath:key];
+                          forKeyPath:key];
     }
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath
