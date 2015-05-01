@@ -30,15 +30,11 @@
             NSArray *datosAzure = [result.items mutableCopy];
             for (id item in datosAzure) {
                 NSLog(@"item -> %@", item);
-                YWCNewsModel * new = [[YWCNewsModel alloc]initWithTitleNew:item[@"title"]
-                                                                   textNew:item[@"text"]
-                                                                  stateNew:item[@"stateNew"]
-                                                                    rating:4 imageURL:@""
-                                                                    author:item[@"author"]];
+                YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item];
                 [self.allNews addObject:new];
-
+                
             }
-                [self.delegate libraryNews:self];            
+            [self.delegate libraryNews:self];
         }else{
             NSLog(@"%@",error);
         }
@@ -54,22 +50,18 @@
             NSArray *datosAzure = [result.items mutableCopy];
             for (id item in datosAzure) {
                 NSLog(@"item -> %@", item);
-                YWCNewsModel * new = [[YWCNewsModel alloc]initWithTitleNew:item[@"title"]
-                                                                   textNew:item[@"text"]
-                                                                  stateNew:item[@"stateNew"]
-                                                                    rating:4 imageURL:@""
-                                                                    author:item[@"author"]];
+                YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item];
                 [self.myNews addObject:new];
-
+                
             }
-                            [self.delegate libraryNews:self];
+            [self.delegate libraryNews:self];
             
         }else{
             NSLog(@"%@",error);
         }
     }];
     
-
+    
 }
 
 
@@ -78,7 +70,10 @@
     NSDictionary *dict= @{@"title":model.titleNew,
                           @"text":model.textNew,
                           @"stateNew":model.stateNew,
-                          @"resourceName":[NSString stringWithFormat:@"%@%@",model.titleNew,[NSDate date]]};
+                          @"imageURL":model.imageURL,
+                          @"author":model.author.nameUser,
+                          @"imageAuthor":model.author.imageURL,
+                          @"rating":[NSString stringWithFormat:@"%d",model.rating]};
     
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
         if (!error) {
@@ -89,7 +84,7 @@
         }
         
     }];
-
+    
     
 }
 

@@ -14,7 +14,10 @@
              stateNew:(NSString *)stateNew
                rating:(int)rating
              imageURL:(NSString *)imageURL
-               author:(YWCProfile *)author{
+               author:(YWCProfile *)author
+             latitude:(double)latitude
+            longitude:(double)longitude
+              address:(NSString *)address{
     if (self = [super init]) {
         _titleNew = title;
         _textNew = textNew;
@@ -22,8 +25,24 @@
         _rating = rating;
         _imageURL = imageURL;
         _author = author;
+        _latitude = latitude;
+        _longitude = longitude;
+        _address = address;
     }
     return self;
+}
++(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item{
+    YWCNewsModel * new = [[YWCNewsModel alloc]initWithTitleNew:item[@"title"]
+                                                       textNew:item[@"text"]
+                                                      stateNew:item[@"stateNew"]
+                                                        rating:4 imageURL:@""
+                                                        author:item[@"author"]
+                                                      latitude:[[NSString stringWithFormat:@"%@",item[@"latitude"]] intValue]
+                                                     longitude:[[NSString stringWithFormat:@"%@",item[@"longitude"]] intValue]
+                                                       address:item[@"address"]];
+    return new;
+
+
 }
 
 @end

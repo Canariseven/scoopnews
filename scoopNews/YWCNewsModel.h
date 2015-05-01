@@ -17,12 +17,21 @@
 @property (nonatomic) int rating;
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, strong) YWCProfile *author;
+@property (nonatomic) double latitude;
+@property (nonatomic) double longitude;
+@property (nonatomic, copy) NSString * address;
+
++(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item;
 
 -(id)initWithTitleNew:(NSString *)title
               textNew:(NSString *)textNew
              stateNew:(NSString *)stateNew
                rating:(int)rating
              imageURL:(NSString *)imageURL
-               author:(YWCProfile *)author;
+               author:(YWCProfile *)author
+             latitude:(double)latitude
+            longitude:(double)longitude
+              address:(NSString *)address;
+
 
 @end
