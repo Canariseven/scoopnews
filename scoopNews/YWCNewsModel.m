@@ -37,12 +37,26 @@
                                                       stateNew:item[@"stateNew"]
                                                         rating:4 imageURL:@""
                                                         author:item[@"author"]
-                                                      latitude:[[NSString stringWithFormat:@"%@",item[@"latitude"]] intValue]
-                                                     longitude:[[NSString stringWithFormat:@"%@",item[@"longitude"]] intValue]
+                                                      latitude:[[NSString stringWithFormat:@"%@",item[@"latitude"]] doubleValue]
+                                                     longitude:[[NSString stringWithFormat:@"%@",item[@"longitude"]] doubleValue]
                                                        address:item[@"address"]];
     return new;
 
 
+}
+
++(NSDictionary *)dictionaryWithModel:(YWCNewsModel *)model{
+    NSDictionary *dict= @{@"title":model.titleNew,
+                          @"text":model.textNew,
+                          @"stateNew":model.stateNew,
+                          @"imageURL":model.imageURL,
+                          @"author":model.author.nameUser,
+                          @"imageAuthor":model.author.imageURL,
+                          @"rating":[NSString stringWithFormat:@"%d",model.rating],
+                          @"latitude":[NSString stringWithFormat:@"%f",model.latitude],
+                          @"longitude":[NSString stringWithFormat:@"%f",model.longitude],
+                          @"address":model.address};
+    return dict;
 }
 
 @end

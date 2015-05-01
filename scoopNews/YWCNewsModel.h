@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSString * address;
 
 +(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item;
-
++(NSDictionary *)dictionaryWithModel:(YWCNewsModel *)model;
 -(id)initWithTitleNew:(NSString *)title
               textNew:(NSString *)textNew
              stateNew:(NSString *)stateNew

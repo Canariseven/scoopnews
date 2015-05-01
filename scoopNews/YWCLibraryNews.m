@@ -67,18 +67,11 @@
 
 -(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table{
     
-    NSDictionary *dict= @{@"title":model.titleNew,
-                          @"text":model.textNew,
-                          @"stateNew":model.stateNew,
-                          @"imageURL":model.imageURL,
-                          @"author":model.author.nameUser,
-                          @"imageAuthor":model.author.imageURL,
-                          @"rating":[NSString stringWithFormat:@"%d",model.rating]};
-    
+    NSDictionary *dict = [YWCNewsModel dictionaryWithModel:model];
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
         if (!error) {
             NSUInteger index = [self.allNews count];
-            [self.allNews insertObject:model atIndex:index];
+            [self.myNews insertObject:model atIndex:index];
         }else{
             NSLog(@"Error %@",error);
         }
