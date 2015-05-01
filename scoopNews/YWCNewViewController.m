@@ -20,12 +20,14 @@
 @property (nonatomic, strong) MSClient *client;
 @property (nonatomic, strong) YWCNewsModel *model;
 @property (nonatomic, strong) YWCLibraryNews *libraryNews;
+@property (nonatomic, strong) YWCProfile *userProfile;
 @end
 
 @implementation YWCNewViewController
--(id)initWithClient:(MSClient *)client{
+-(id)initWithClient:(MSClient *)client userProfile:(YWCProfile *)userProfile{
     if (self = [super initWithNibName:nil bundle:nil]) {
         _client = client;
+        _userProfile = userProfile;
     }
     return self;
 }
@@ -170,25 +172,33 @@ didCompleteWithError:(NSError *)error
 #pragma mark - Utils
 
 -(void)saveMyNew:(id)sender{
-    self.model = [[YWCNewsModel alloc]initWithTitleNew:self.title
+    self.model = [[YWCNewsModel alloc]initWithTitleNew:self.titleNewTextField.text
                                                textNew:self.textNew.text
                                               stateNew:@"noPublic"
                                                 rating:0
                                               imageURL:@""
-                                                author:self.libraryNews.user
+                                                author:self.userProfile
                                               latitude:0.0f
                                              longitude:0.0f
                                                address:@"Una calle"];
     MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.client];
-    [self.libraryNews addMyNewWithModel:self.model client:self.client andTable:table completion:^(NSError *error) {
+    
+    NSDictionary *dict = [YWCNewsModel dictionaryWithModel:self.model];
+    [table insert:dict completion:^(NSDictionary *item, NSError *error) {
         if (!error) {
-                    [self pop];
+            NSUInteger index = [self.libraryNews.myNews count];
+            [self.libraryNews.myNews insertObject:self.model atIndex:index];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            NSLog(@"Error %@",error);
         }
+        
     }];
+    
 
 }
 
 -(void)pop{
-    [self.navigationController popViewControllerAnimated:YES];
+
 }
 @end

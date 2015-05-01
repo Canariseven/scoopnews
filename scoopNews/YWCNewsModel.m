@@ -62,6 +62,7 @@
                           @"latitude":[NSString stringWithFormat:@"%f",model.latitude],
                           @"longitude":[NSString stringWithFormat:@"%f",model.longitude],
                           @"address":model.address};
+    
     return dict;
 }
 

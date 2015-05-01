@@ -59,7 +59,6 @@
         self.myNewsButton.enabled = YES;
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
         [self.loginButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        self.profile = [[YWCProfile alloc]initWithClient:self.client];
         [self.profile loadUserAuthInfo];
         [self.profile getUserInfo];
         self.userNameLabel.text = self.profile.nameUser;

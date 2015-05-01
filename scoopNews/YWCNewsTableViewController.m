@@ -39,8 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+
     
     if ([self.modePresent  isEqual: @"ALLNEWS"]) {
         UINib *nib = [UINib nibWithNibName:@"YWCGeneralNewsTableViewCell" bundle:nil];
@@ -64,6 +63,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     [self setupKVO];
 }
 -(void)viewDidDisappear:(BOOL)animated{
@@ -108,7 +109,7 @@
 }
 
 -(void)addNew:(id)sender{
-    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithClient:self.client];
+    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithClient:self.client userProfile:self.arrayModel.user];
     [self.navigationController pushViewController:newVC animated:YES];
     
 }

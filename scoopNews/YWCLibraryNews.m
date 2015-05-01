@@ -66,16 +66,7 @@
 
 -(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table completion:(void(^)(NSError *error))completion{
     
-    NSDictionary *dict = [YWCNewsModel dictionaryWithModel:model];
-    [table insert:dict completion:^(NSDictionary *item, NSError *error) {
-        if (!error) {
-            NSUInteger index = [self.allNews count];
-            [self.myNews insertObject:model atIndex:index];
-        }else{
-            NSLog(@"Error %@",error);
-        }
-        
-    }];
+
 }
 
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath{

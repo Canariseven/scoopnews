@@ -16,6 +16,9 @@
 }
 -(void)sincronizeView{
     self.titleNew.text = self.model.titleNew;
+    
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
