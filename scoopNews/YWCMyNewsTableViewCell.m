@@ -7,11 +7,15 @@
 //
 
 #import "YWCMyNewsTableViewCell.h"
+#import "YWCNewsModel.h"
 
 @implementation YWCMyNewsTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
+}
+-(void)sincronizeView{
+    self.titleNew.text = self.model.titleNew;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

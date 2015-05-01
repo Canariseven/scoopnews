@@ -7,13 +7,17 @@
 //
 
 #import "YWCGeneralNewsTableViewCell.h"
-
+#import "YWCNewsModel.h"
+#import "YWCProfile.h"
 @implementation YWCGeneralNewsTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
 }
-
+-(void)sincronizeView{
+    self.titleNew.text = self.model.titleNew;
+    self.authorNew.text = self.model.author.nameUser;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

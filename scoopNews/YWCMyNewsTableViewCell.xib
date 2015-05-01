@@ -24,29 +24,11 @@
                         <color key="textColor" red="0.094221301376819611" green="0.48781818151473999" blue="0.73891341686248779" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Puntuación 0/5" minimumFontSize="17" id="KvP-wv-OU4">
-                        <rect key="frame" x="82" y="35" width="150" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QzP-z2-SVI">
-                        <rect key="frame" x="266" y="8" width="46" height="57"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <state key="normal" title="Publicar">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="Public:" destination="WsQ-UH-AOE" eventType="touchUpInside" id="UpR-H3-zEu"/>
-                        </connections>
-                    </button>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="image" destination="kfv-H7-o6d" id="hUx-ex-l5z"/>
-                <outlet property="textFieldPoints" destination="KvP-wv-OU4" id="go1-Py-Kos"/>
                 <outlet property="titleNew" destination="CHw-Rs-Ykx" id="NMf-4a-sso"/>
             </connections>
         </tableViewCell>

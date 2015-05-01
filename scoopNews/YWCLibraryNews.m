@@ -34,11 +34,11 @@
                                                                    textNew:item[@"text"]
                                                                   stateNew:item[@"stateNew"]
                                                                     rating:4 imageURL:@""
-                                                                    author:nil];
+                                                                    author:item[@"author"]];
                 [self.allNews addObject:new];
-                [self.delegate libraryNews:self];
+
             }
-            
+                [self.delegate libraryNews:self];            
         }else{
             NSLog(@"%@",error);
         }
@@ -58,10 +58,11 @@
                                                                    textNew:item[@"text"]
                                                                   stateNew:item[@"stateNew"]
                                                                     rating:4 imageURL:@""
-                                                                    author:nil];
+                                                                    author:item[@"author"]];
                 [self.myNews addObject:new];
-                [self.delegate libraryNews:self];
+
             }
+                            [self.delegate libraryNews:self];
             
         }else{
             NSLog(@"%@",error);

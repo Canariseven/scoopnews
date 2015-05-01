@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class YWCNewsModel;
 @interface YWCMyNewsTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *titleNew;
-@property (weak, nonatomic) IBOutlet UITextField *textFieldPoints;
-- (IBAction)Public:(id)sender;
-
+@property (nonatomic, strong) YWCNewsModel *model;
+-(void)sincronizeView;
 @end

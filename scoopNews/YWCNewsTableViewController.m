@@ -27,7 +27,7 @@
             andTable:(MSTable *)table
                 mode:(NSString *)mode{
     if (self = [super initWithNibName:nil bundle:nil]) {
-
+        
         self.modePresent = mode;
         _arrayModel = arrayModel;
         _client = client;
@@ -41,8 +41,14 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    UINib *nib = [UINib nibWithNibName:@"YWCGeneralNewsTableViewCell" bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"generalCellID"];
+    
+    if ([self.modePresent  isEqual: @"ALLNEWS"]) {
+        UINib *nib = [UINib nibWithNibName:@"YWCGeneralNewsTableViewCell" bundle:nil];
+        [self.tableView registerNib:nib forCellReuseIdentifier:@"generalCellID"];
+    }else{
+        UINib *nib = [UINib nibWithNibName:@"YWCMyNewsTableViewCell" bundle:nil];
+        [self.tableView registerNib:nib forCellReuseIdentifier:@"owNewsCellID"];
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -53,7 +59,7 @@
                                                                             action:@selector(addNew:)];
         self.navigationItem.rightBarButtonItem = add;
     }
-
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -87,12 +93,15 @@
     if ([self.modePresent  isEqual: @"ALLNEWS"]) {
         YWCGeneralNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"generalCellID" forIndexPath:indexPath];
         YWCNewsModel * model = [self.arrayModel newFromAllNewsAtIndexPath:indexPath];
-        cell.titleNew.text = model.titleNew;
+        cell.model = model;
+        [cell sincronizeView];
+        return cell;
         return cell;
     }else{
-        YWCMyNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"generalCellID" forIndexPath:indexPath];
-        YWCNewsModel * model = [self.arrayModel newFromAllNewsAtIndexPath:indexPath];
-        cell.titleNew.text = model.titleNew;
+        YWCMyNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"owNewsCellID" forIndexPath:indexPath];
+        YWCNewsModel * model = [self.arrayModel newFromMyNewsAtIndexPath:indexPath];
+        cell.model = model;
+        [cell sincronizeView];
         return cell;
     }
     return nil;
@@ -101,7 +110,7 @@
 -(void)addNew:(id)sender{
     YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithClient:self.client];
     [self.navigationController pushViewController:newVC animated:YES];
-
+    
 }
 
 
