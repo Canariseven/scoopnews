@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YWCLoginViewController">
+            <connections>
+                <outlet property="contentImageView" destination="17q-gf-GkQ" id="5nP-Jb-QVi"/>
+                <outlet property="image" destination="yk4-cI-oPT" id="5d3-lU-eh9"/>
+                <outlet property="loginButton" destination="fs5-6s-muq" id="Jjj-29-vRO"/>
+                <outlet property="nameLabel" destination="YhK-K8-7rE" id="oEu-Li-AL8"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs5-6s-muq">
+                    <rect key="frame" x="244" y="285" width="111" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="111" id="V7q-09-hqB"/>
+                        <constraint firstAttribute="height" constant="30" id="kNS-za-Hi5"/>
+                    </constraints>
+                    <state key="normal" title="Login Facebook">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="loginButton:" destination="-1" eventType="touchUpInside" id="pfF-HH-w8i"/>
+                    </connections>
+                </button>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17q-gf-GkQ">
+                    <rect key="frame" x="239" y="83" width="122" height="121"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yk4-cI-oPT">
+                            <rect key="frame" x="0.0" y="0.0" width="122" height="121"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="121" id="cWa-qP-kk1"/>
+                        <constraint firstAttribute="width" constant="122" id="hH2-xj-Xey"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Realiza Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="YhK-K8-7rE">
+                    <rect key="frame" x="20" y="230" width="560" height="28"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.094221301376819611" green="0.48781818151473999" blue="0.73891341686248779" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="fs5-6s-muq" secondAttribute="centerX" id="CO1-pN-eX9"/>
+                <constraint firstItem="YhK-K8-7rE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="FWm-Rv-MVJ"/>
+                <constraint firstAttribute="centerX" secondItem="17q-gf-GkQ" secondAttribute="centerX" id="ZPx-lQ-F5g"/>
+                <constraint firstItem="17q-gf-GkQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="83" id="dko-W9-aAi"/>
+                <constraint firstAttribute="trailing" secondItem="YhK-K8-7rE" secondAttribute="trailing" constant="20" id="g2a-pW-o7v"/>
+                <constraint firstItem="YhK-K8-7rE" firstAttribute="top" secondItem="17q-gf-GkQ" secondAttribute="bottom" constant="26" id="kF6-FW-cqk"/>
+                <constraint firstItem="fs5-6s-muq" firstAttribute="top" secondItem="YhK-K8-7rE" secondAttribute="bottom" constant="27" id="kxm-3a-msQ"/>
+            </constraints>
+            <point key="canvasLocation" x="452" y="633"/>
+        </view>
+    </objects>
+</document>

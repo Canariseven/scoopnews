@@ -25,15 +25,14 @@
 @property (nonatomic, strong) YWCNewsModel *newsModel;
 @property (nonatomic, strong) NSMutableArray *allNews;
 @property (nonatomic, strong) NSMutableArray *myNews;
-
 @property (nonatomic, readonly) NSUInteger allNewsCount;
 @property (nonatomic, readonly) NSUInteger myNewsCount;
-
 @property (nonatomic, weak) id<YWCLibraryNewsDelegate> delegate;
-@property (nonatomic, strong) UITableView* tableView;
+-(id)initWithUser:(YWCProfile *)user;
 
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath;
 -(YWCNewsModel *)newFromMyNewsAtIndexPath:(NSIndexPath *)indexPath;
 -(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table;
 -(void)getAllNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
+-(void)getMyNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
 @end

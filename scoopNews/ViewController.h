@@ -9,7 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 @interface ViewController : UIViewController
+- (IBAction)loginButton:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imageProfile;
+
+@property (weak, nonatomic) IBOutlet UIButton *myNewsButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIView *contentImageView;
 -(id)initWithClient:(MSClient *)client andTable:(MSTable *)table;
 @end
 

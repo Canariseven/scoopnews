@@ -20,5 +20,5 @@
 @interface YWCNewsTableViewController : UIViewController<YWCLibraryNewsDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 //@property (weak, nonatomic) id<YWCnewsTableViewControllerDelegate> delegate;
--(id)initWithAllNews:(YWCLibraryNews *)arrayModel withClient:(MSClient *)client andTable:(MSTable *)table;
+-(id)initWithAllNews:(YWCLibraryNews *)arrayModel withClient:(MSClient *)client andTable:(MSTable *)table mode:(NSString *)mode;
 @end

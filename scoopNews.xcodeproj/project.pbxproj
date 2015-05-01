@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		325028B51AF2D5D800E2ED61 /* services.m in Sources */ = {isa = PBXBuildFile; fileRef = 325028B41AF2D5D800E2ED61 /* services.m */; };
+		325028B81AF307D600E2ED61 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 325028B71AF307D600E2ED61 /* UIImage+Resize.m */; };
 		32724B7C1AF158F900DFD5FF /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */; };
 		32724B7E1AF15A5E00DFD5FF /* settings.h in Resources */ = {isa = PBXBuildFile; fileRef = 32724B7D1AF15A5E00DFD5FF /* settings.h */; };
 		32724B811AF1719E00DFD5FF /* YWCNewsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B801AF1719E00DFD5FF /* YWCNewsTableViewController.m */; };
@@ -21,6 +23,12 @@
 		32724B9A1AF18AEB00DFD5FF /* YWCNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */; };
 		32724B9C1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B9B1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib */; };
 		32724B9E1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B9D1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib */; };
+		32DE54511AF2B4A900E4329D /* YWCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE544F1AF2B4A900E4329D /* YWCLoginViewController.m */; };
+		32DE54521AF2B4A900E4329D /* YWCLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DE54501AF2B4A900E4329D /* YWCLoginViewController.xib */; };
+		32DE545C1AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE54551AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m */; };
+		32DE545D1AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE54571AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.m */; };
+		32DE545E1AF2BA5700E4329D /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE54591AF2BA5700E4329D /* TPKeyboardAvoidingTableView.m */; };
+		32DE545F1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE545B1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		32E793501AF1584E00F8F558 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E7934F1AF1584E00F8F558 /* main.m */; };
 		32E793531AF1584E00F8F558 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E793521AF1584E00F8F558 /* AppDelegate.m */; };
 		32E793561AF1584E00F8F558 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E793551AF1584E00F8F558 /* ViewController.m */; };
@@ -41,6 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		325028B31AF2D5D800E2ED61 /* services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = services.h; sourceTree = "<group>"; };
+		325028B41AF2D5D800E2ED61 /* services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = services.m; sourceTree = "<group>"; };
+		325028B61AF307D600E2ED61 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		325028B71AF307D600E2ED61 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMobileServices.framework; path = scoopNews/WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		32724B7D1AF15A5E00DFD5FF /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
 		32724B7F1AF1719E00DFD5FF /* YWCNewsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCNewsTableViewController.h; sourceTree = "<group>"; };
@@ -62,6 +74,17 @@
 		32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCNewViewController.xib; sourceTree = "<group>"; };
 		32724B9B1AF18B2D00DFD5FF /* YWCMyNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCMyNewsTableViewCell.xib; sourceTree = "<group>"; };
 		32724B9D1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCGeneralNewsTableViewCell.xib; sourceTree = "<group>"; };
+		32DE544E1AF2B4A900E4329D /* YWCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCLoginViewController.h; sourceTree = "<group>"; };
+		32DE544F1AF2B4A900E4329D /* YWCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCLoginViewController.m; sourceTree = "<group>"; };
+		32DE54501AF2B4A900E4329D /* YWCLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCLoginViewController.xib; sourceTree = "<group>"; };
+		32DE54541AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
+		32DE54551AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingCollectionView.m; sourceTree = "<group>"; };
+		32DE54561AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		32DE54571AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		32DE54581AF2BA5700E4329D /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
+		32DE54591AF2BA5700E4329D /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		32DE545A1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
+		32DE545B1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		32E7934A1AF1584E00F8F558 /* scoopNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scoopNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E7934E1AF1584E00F8F558 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E7934F1AF1584E00F8F558 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -96,6 +119,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		325028B91AF307E100E2ED61 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				325028B61AF307D600E2ED61 /* UIImage+Resize.h */,
+				325028B71AF307D600E2ED61 /* UIImage+Resize.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		32724B8E1AF173AB00DFD5FF /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,10 +154,37 @@
 			name = Celdas;
 			sourceTree = "<group>";
 		};
+		32DE54531AF2B4B000E4329D /* login */ = {
+			isa = PBXGroup;
+			children = (
+				32DE544E1AF2B4A900E4329D /* YWCLoginViewController.h */,
+				32DE544F1AF2B4A900E4329D /* YWCLoginViewController.m */,
+				32DE54501AF2B4A900E4329D /* YWCLoginViewController.xib */,
+			);
+			name = login;
+			sourceTree = "<group>";
+		};
+		32DE54601AF2BA5B00E4329D /* TPKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				32DE54541AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.h */,
+				32DE54551AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m */,
+				32DE54561AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.h */,
+				32DE54571AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.m */,
+				32DE54581AF2BA5700E4329D /* TPKeyboardAvoidingTableView.h */,
+				32DE54591AF2BA5700E4329D /* TPKeyboardAvoidingTableView.m */,
+				32DE545A1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
+				32DE545B1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
+			);
+			name = TPKeyboard;
+			sourceTree = "<group>";
+		};
 		32E793411AF1584E00F8F558 = {
 			isa = PBXGroup;
 			children = (
 				32724B7D1AF15A5E00DFD5FF /* settings.h */,
+				325028B31AF2D5D800E2ED61 /* services.h */,
+				325028B41AF2D5D800E2ED61 /* services.m */,
 				32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */,
 				32E7934C1AF1584E00F8F558 /* scoopNews */,
 				32E793661AF1584F00F8F558 /* scoopNewsTests */,
@@ -145,6 +204,8 @@
 		32E7934C1AF1584E00F8F558 /* scoopNews */ = {
 			isa = PBXGroup;
 			children = (
+				32DE54601AF2BA5B00E4329D /* TPKeyboard */,
+				32DE54531AF2B4B000E4329D /* login */,
 				32E793511AF1584E00F8F558 /* AppDelegate.h */,
 				32E793521AF1584E00F8F558 /* AppDelegate.m */,
 				32E793541AF1584E00F8F558 /* ViewController.h */,
@@ -162,6 +223,7 @@
 				32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */,
 				32724B9F1AF1912000DFD5FF /* Celdas */,
 				32724B8E1AF173AB00DFD5FF /* Models */,
+				325028B91AF307E100E2ED61 /* Extensions */,
 			);
 			path = scoopNews;
 			sourceTree = "<group>";
@@ -274,6 +336,7 @@
 			files = (
 				32724B961AF18A6100DFD5FF /* ViewController.xib in Resources */,
 				32E793591AF1584F00F8F558 /* Main.storyboard in Resources */,
+				32DE54521AF2B4A900E4329D /* YWCLoginViewController.xib in Resources */,
 				32724B7E1AF15A5E00DFD5FF /* settings.h in Resources */,
 				32E7935E1AF1584F00F8F558 /* LaunchScreen.xib in Resources */,
 				32724B9E1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib in Resources */,
@@ -298,15 +361,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32DE545D1AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.m in Sources */,
 				32724B871AF1726700DFD5FF /* YWCMyNewsTableViewCell.m in Sources */,
 				32E793561AF1584E00F8F558 /* ViewController.m in Sources */,
 				32724B8D1AF173A700DFD5FF /* YWCNewsModel.m in Sources */,
+				32DE545F1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
+				32DE54511AF2B4A900E4329D /* YWCLoginViewController.m in Sources */,
 				32E793531AF1584E00F8F558 /* AppDelegate.m in Sources */,
 				32724B811AF1719E00DFD5FF /* YWCNewsTableViewController.m in Sources */,
 				32724B8A1AF172E700DFD5FF /* YWCNewViewController.m in Sources */,
+				325028B51AF2D5D800E2ED61 /* services.m in Sources */,
 				32E793501AF1584E00F8F558 /* main.m in Sources */,
+				32DE545E1AF2BA5700E4329D /* TPKeyboardAvoidingTableView.m in Sources */,
 				32724B911AF1746A00DFD5FF /* YWCProfile.m in Sources */,
 				32724B941AF174CD00DFD5FF /* YWCLibraryNews.m in Sources */,
+				32DE545C1AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m in Sources */,
+				325028B81AF307D600E2ED61 /* UIImage+Resize.m in Sources */,
 				32724B841AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

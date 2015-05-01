@@ -11,8 +11,9 @@
 #import "YWCNewsModel.h"
 @implementation YWCLibraryNews
 
--(id)init{
+-(id)initWithUser:(YWCProfile *)user{
     if (self = [super init]) {
+        _user = user;
         _allNews = [[NSMutableArray alloc]init];
         _myNews = [[NSMutableArray alloc]init];
     }
@@ -20,25 +21,54 @@
 }
 
 -(void)getAllNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table{
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID != %@",self.user.idUser];
-    [table readWithPredicate:nil completion:^(MSQueryResult *result, NSError *error) {
+    NSPredicate *predicate;
+    if (self.user != nil) {
+        predicate = [NSPredicate predicateWithFormat:@"(userId != %@) OR (userId == %@)",self.user.idUser,NULL];
+    }
+    [table readWithPredicate:predicate completion:^(MSQueryResult *result, NSError *error) {
         if (!error) {
             NSArray *datosAzure = [result.items mutableCopy];
             for (id item in datosAzure) {
                 NSLog(@"item -> %@", item);
                 YWCNewsModel * new = [[YWCNewsModel alloc]initWithTitleNew:item[@"title"]
-                                                                     textNew:item[@"text"]
-                                                                    stateNew:item[@"stateNew"]
-                                                                      rating:4 imageURL:@""
-                                                                      author:nil];
+                                                                   textNew:item[@"text"]
+                                                                  stateNew:item[@"stateNew"]
+                                                                    rating:4 imageURL:@""
+                                                                    author:nil];
                 [self.allNews addObject:new];
                 [self.delegate libraryNews:self];
             }
-
+            
         }else{
             NSLog(@"%@",error);
         }
     }];
+}
+
+-(void)getMyNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table{
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@",self.user.idUser];
+    
+    [table readWithPredicate:predicate completion:^(MSQueryResult *result, NSError *error) {
+        if (!error) {
+            NSArray *datosAzure = [result.items mutableCopy];
+            for (id item in datosAzure) {
+                NSLog(@"item -> %@", item);
+                YWCNewsModel * new = [[YWCNewsModel alloc]initWithTitleNew:item[@"title"]
+                                                                   textNew:item[@"text"]
+                                                                  stateNew:item[@"stateNew"]
+                                                                    rating:4 imageURL:@""
+                                                                    author:nil];
+                [self.myNews addObject:new];
+                [self.delegate libraryNews:self];
+            }
+            
+        }else{
+            NSLog(@"%@",error);
+        }
+    }];
+    
+
 }
 
 
@@ -46,17 +76,20 @@
     
     NSDictionary *dict= @{@"title":model.titleNew,
                           @"text":model.textNew,
-                          @"stateNew":model.stateNew};
+                          @"stateNew":model.stateNew,
+                          @"resourceName":[NSString stringWithFormat:@"%@%@",model.titleNew,[NSDate date]]};
+    
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
         if (!error) {
             NSUInteger index = [self.allNews count];
             [self.allNews insertObject:model atIndex:index];
-                            [self.tableView reloadData];
         }else{
             NSLog(@"Error %@",error);
         }
-  
+        
     }];
+
+    
 }
 
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath{
