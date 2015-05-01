@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSURLSession *mySession;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) MSClient *client;
+@property (nonatomic, strong) YWCNewsModel *model;
+@property (nonatomic, strong) YWCLibraryNews *libraryNews;
 @end
 
 @implementation YWCNewViewController
@@ -33,11 +35,21 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choosePhoto:)];
     [self.image addGestureRecognizer:tap];
     self.image.userInteractionEnabled = YES;
+    
+    
+    UIBarButtonItem *add = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self
+                                                                        action:@selector(saveMyNew:)];
+    self.navigationItem.rightBarButtonItem = add;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    
 }
 
 - (void)choosePhoto:(id)sender
@@ -59,20 +71,20 @@
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     [self dismissViewControllerAnimated:YES completion:nil];
     self.image.image = image;
-
+    
 }
 -(void)obtenerImage{
     
-        NSDictionary *item = @{@"containerName":@"news",@"resourceName":@"casa.jpg"};
-            NSDictionary *params = @{@"blobName":@"casa.jpg",@"item":item};
-        [self.client invokeAPI:@"uploadblob"
-                          body:nil
-                    HTTPMethod:@"PUT"
-                    parameters:params
-                       headers:nil
-                    completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-    
-                    }];
+    NSDictionary *item = @{@"containerName":@"news",@"resourceName":@"casa.jpg"};
+    NSDictionary *params = @{@"blobName":@"casa.jpg",@"item":item};
+    [self.client invokeAPI:@"uploadblob"
+                      body:nil
+                HTTPMethod:@"PUT"
+                parameters:params
+                   headers:nil
+                completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                    
+                }];
 }
 // stop upload
 - (IBAction)cancelUpload:(id)sender {
@@ -86,26 +98,26 @@
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     config.HTTPMaximumConnectionsPerHost = 1;
-
+    
     NSURLSession *upLoadSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     NSURL *blobURL = [NSURL URLWithString:sasUrl];
-
-//    config.HTTPAdditionalHeaders= @{@"ARRAffinity":@"7d51198690a579fd20a213541db9f01e2eb110d00725cc11a85f3f7a0f13f391",
-//                                     @"_gat":@"1",
-//                                     @"account":@"canarisevenblob",
-//                                     @"key":@"EdUlm1oXs5hd6GnQMdDz6TjfivZmuIqR6z1qXQJasY5JdAkqWQvO/oMO0yBJ4yYp+AVBhzfAojk/4bTQQbZr5w==",
-//                                     @"_ga":@"GA1.3.1383344522.1430472611"};
+    
+    //    config.HTTPAdditionalHeaders= @{@"ARRAffinity":@"7d51198690a579fd20a213541db9f01e2eb110d00725cc11a85f3f7a0f13f391",
+    //                                     @"_gat":@"1",
+    //                                     @"account":@"canarisevenblob",
+    //                                     @"key":@"EdUlm1oXs5hd6GnQMdDz6TjfivZmuIqR6z1qXQJasY5JdAkqWQvO/oMO0yBJ4yYp+AVBhzfAojk/4bTQQbZr5w==",
+    //                                     @"_ga":@"GA1.3.1383344522.1430472611"};
     config.HTTPAdditionalHeaders = @{@"SharedKey myaccount":@"EdUlm1oXs5hd6GnQMdDz6TjfivZmuIqR6z1qXQJasY5JdAkqWQvO/oMO0yBJ4yYp+AVBhzfAojk/4bTQQbZr5w=="};
-
+    
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:blobURL];
     [request setHTTPMethod:@"PUT"];
     [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-
+    
     self.uploadTask = [upLoadSession uploadTaskWithRequest:request fromData:imageData];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-
+    
     [_uploadTask resume];
 }
 
@@ -134,7 +146,7 @@ didCompleteWithError:(NSError *)error
         //        _uploadView.hidden = YES;
         [_progress setProgress:0.5];
     });
-
+    
     if (!error) {
         // 2
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -154,5 +166,18 @@ didCompleteWithError:(NSError *)error
 }
 
 - (IBAction)locationButton:(id)sender {
+}
+#pragma mark - Utils
+
+-(void)saveMyNew:(id)sender{
+    self.model = [[YWCNewsModel alloc]initWithTitleNew:self.title
+                                               textNew:self.textNew.text
+                                              stateNew:@"noPublic"
+                                                rating:0
+                                              imageURL:@""
+                                                author:self.libraryNews.user
+                                              latitude:0.0f
+                                             longitude:0.0f
+                                               address:@"Una calle"];
 }
 @end
