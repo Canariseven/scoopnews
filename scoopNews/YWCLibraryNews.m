@@ -64,8 +64,7 @@
     
 }
 
-
--(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table{
+-(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table completion:(void(^)(NSError *error))completion{
     
     NSDictionary *dict = [YWCNewsModel dictionaryWithModel:model];
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
@@ -77,8 +76,6 @@
         }
         
     }];
-    
-    
 }
 
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath{

@@ -32,7 +32,9 @@
     return self;
 }
 +(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item{
-    YWCProfile *author = [[YWCProfile alloc]initWithName:item[@"author"] idUser:@"" imageURL:item[@"imageAuthor"]];
+    YWCProfile *author = [[YWCProfile alloc]initWithName:item[@"author"]
+                                                  idUser:@""
+                                                imageURL:item[@"imageAuthor"]];
     
     YWCNewsModel * new = [[YWCNewsModel alloc]initWithTitleNew:item[@"title"]
                                                        textNew:item[@"text"]

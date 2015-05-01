@@ -179,5 +179,16 @@ didCompleteWithError:(NSError *)error
                                               latitude:0.0f
                                              longitude:0.0f
                                                address:@"Una calle"];
+    MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.client];
+    [self.libraryNews addMyNewWithModel:self.model client:self.client andTable:table completion:^(NSError *error) {
+        if (!error) {
+                    [self pop];
+        }
+    }];
+
+}
+
+-(void)pop{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

@@ -32,7 +32,8 @@
 
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath;
 -(YWCNewsModel *)newFromMyNewsAtIndexPath:(NSIndexPath *)indexPath;
--(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table;
 -(void)getAllNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
 -(void)getMyNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
+
+-(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table completion:(void(^)(NSError *error))completion;
 @end
