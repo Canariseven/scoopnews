@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Carmelo Ruymán Quintana Santana. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "YWCViewController.h"
 #import "YWCNewsTableViewController.h"
 #import "YWCLibraryNews.h"
 #import "YWCLoginViewController.h"
 #import "YWCProfile.h"
 #import "services.h"
-@interface ViewController ()
+@interface YWCViewController ()
 - (IBAction)allNews:(id)sender;
 - (IBAction)myNews:(id)sender;
 @property (nonatomic, strong) MSClient *client;
@@ -20,7 +20,7 @@
 @property (nonatomic, strong) YWCProfile *profile;
 @end
 
-@implementation ViewController
+@implementation YWCViewController
 
 -(id)initWithClient:(MSClient *)client andTable:(MSTable *)table{
     if (self = [super initWithNibName:nil bundle:nil]) {
@@ -54,10 +54,8 @@
         // NO LOGIN
         self.myNewsButton.enabled = NO;
         [self.myNewsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        
         [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
         [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
         self.imageProfile.image = nil;
         self.userNameLabel.text = @"Realiza Login";
         

@@ -28,6 +28,7 @@
 @property (nonatomic, readonly) NSUInteger allNewsCount;
 @property (nonatomic, readonly) NSUInteger myNewsCount;
 @property (nonatomic, weak) id<YWCLibraryNewsDelegate> delegate;
+@property (nonatomic, strong) MSClient *client;
 -(id)initWithUser:(YWCProfile *)user;
 
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath;
@@ -35,5 +36,4 @@
 -(void)getAllNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
 -(void)getMyNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
 
--(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table completion:(void(^)(NSError *error))completion;
 @end

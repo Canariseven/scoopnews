@@ -72,11 +72,6 @@
     
 }
 
--(void)addMyNewWithModel:(YWCNewsModel *)model client:(MSClient *)client andTable:(MSTable *)table completion:(void(^)(NSError *error))completion{
-    
-
-}
-
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath{
     return [self.allNews objectAtIndex:indexPath.row];
 }

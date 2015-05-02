@@ -10,14 +10,23 @@
 @import Foundation;
 @class YWCProfile;
 @class YWCLibraryNews;
+@class YWCNewsModel;
 @interface YWCNewViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UITextView *textNew;
 @property (weak, nonatomic) IBOutlet UIView *middleView;
 @property (weak, nonatomic) IBOutlet UITextField *titleNewTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePhoto;
+@property (weak, nonatomic) IBOutlet UIView *contentViewImageProfile;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentValorator;
+@property (weak, nonatomic) IBOutlet UILabel *authorName;
+@property (weak, nonatomic) IBOutlet UILabel *dateNew;
+@property (weak, nonatomic) IBOutlet UIButton *locationButton;
+@property (weak, nonatomic) IBOutlet UIButton *voteButton;
+@property (weak, nonatomic) IBOutlet UIButton *publishButton;
 - (IBAction)publiButton:(id)sender;
 - (IBAction)locationButton:(id)sender;
--(id)initWithClient:(MSClient *)client userProfile:(YWCProfile *)userProfile andLibrary:(YWCLibraryNews *)library;
+-(id)initWithUserProfile:(YWCProfile *)userProfile andLibrary:(YWCLibraryNews *)library;
+-(id)initWithNewsModel:(YWCNewsModel *)newsModel;
 
 @end

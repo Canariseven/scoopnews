@@ -6,32 +6,33 @@
 //  Copyright (c) 2015 Carmelo Ruymán Quintana Santana. All rights reserved.
 //
 
-
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 @import Foundation;
 @import UIKit;
 @class YWCProfile;
+@class YWClocationModel;
 @interface YWCNewsModel : NSObject
+@property (nonatomic, copy) NSString *idNews;
 @property (nonatomic, copy) NSString *titleNew;
 @property (nonatomic, copy) NSString *textNew;
 @property (nonatomic, copy) NSString *stateNew;
-@property (nonatomic) int rating;
+@property (nonatomic) double rating;
+@property (nonatomic) double numberOfVotes;
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, strong) YWCProfile *author;
-@property (nonatomic) double latitude;
-@property (nonatomic) double longitude;
-@property (nonatomic, copy) NSString * address;
-
+@property (nonatomic, strong) YWClocationModel *location;
+@property (nonatomic, strong) MSClient *client;
+@property (nonatomic, strong) NSString *creationDate;
 +(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item;
 +(NSDictionary *)dictionaryWithModel:(YWCNewsModel *)model;
 -(id)initWithTitleNew:(NSString *)title
               textNew:(NSString *)textNew
              stateNew:(NSString *)stateNew
-               rating:(int)rating
+               rating:(double)rating
              imageURL:(NSString *)imageURL
                author:(YWCProfile *)author
-             latitude:(double)latitude
-            longitude:(double)longitude
-              address:(NSString *)address;
+             location:(YWClocationModel *)location
+         creationDate:(NSString *)creationDate;
 
 
 @end

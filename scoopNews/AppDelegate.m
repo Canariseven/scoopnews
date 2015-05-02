@@ -8,7 +8,7 @@
 #import "settings.h"
 #import "AppDelegate.h"
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
-#import "ViewController.h"
+#import "YWCViewController.h"
 @interface AppDelegate ()
 @property (nonatomic, strong) MSClient *client;
 @property (nonatomic, strong) MSTable *table;
@@ -19,9 +19,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     [self configureAzure];
-    ViewController *vc = [[ViewController alloc]initWithClient:self.client andTable:self.table];
+    YWCViewController *vc = [[YWCViewController alloc]initWithClient:self.client andTable:self.table];
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = nav;

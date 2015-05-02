@@ -11,6 +11,7 @@
 @interface YWCMyNewsTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *titleNew;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
 @property (nonatomic, strong) YWCNewsModel *model;
 -(void)sincronizeView;
 @end

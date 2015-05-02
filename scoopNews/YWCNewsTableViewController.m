@@ -13,6 +13,7 @@
 #import "YWCNewsModel.h"
 #import "YWCNewViewController.h"
 #import "YWCProfile.h"
+#import "YWClocationModel.h"
 @interface YWCNewsTableViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) YWCLibraryNews *arrayModel;
 @property (nonatomic, strong) NSString *modePresent;
@@ -95,7 +96,6 @@
         cell.model = model;
         [cell sincronizeView];
         return cell;
-        return cell;
     }else{
         YWCMyNewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"owNewsCellID" forIndexPath:indexPath];
         YWCNewsModel * model = [self.arrayModel newFromMyNewsAtIndexPath:indexPath];
@@ -106,8 +106,23 @@
     return nil;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    YWCNewsModel * model;
+    if ([self.modePresent  isEqual: @"ALLNEWS"]) {
+        model = [self.arrayModel newFromAllNewsAtIndexPath:indexPath];
+    }else{
+        model = [self.arrayModel newFromMyNewsAtIndexPath:indexPath];
+    }
+    model.client = self.client;
+    YWCNewViewController *shownNewVc= [[YWCNewViewController alloc]initWithNewsModel:model];
+    [self.navigationController pushViewController:shownNewVc animated:YES];
+}
+
 -(void)addNew:(id)sender{
-    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithClient:self.client userProfile:self.arrayModel.user andLibrary:self.arrayModel];
+    self.arrayModel.client = self.client;
+
+    
+    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithUserProfile:self.arrayModel.user andLibrary:self.arrayModel];
     [self.navigationController pushViewController:newVC animated:YES];
     
 }

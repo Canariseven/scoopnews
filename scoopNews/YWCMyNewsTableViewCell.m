@@ -16,7 +16,7 @@
 }
 -(void)sincronizeView{
     self.titleNew.text = self.model.titleNew;
-    
+    self.ratingLabel.text = [NSString stringWithFormat:@"%f.0",self.model.rating/self.model.numberOfVotes ];
     
     
 }

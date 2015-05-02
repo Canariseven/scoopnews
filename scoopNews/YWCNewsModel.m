@@ -8,16 +8,17 @@
 
 #import "YWCNewsModel.h"
 #import "YWCProfile.h"
+#import "YWClocationModel.h"
+
 @implementation YWCNewsModel
 -(id)initWithTitleNew:(NSString *)title
               textNew:(NSString *)textNew
              stateNew:(NSString *)stateNew
-               rating:(int)rating
+               rating:(double)rating
              imageURL:(NSString *)imageURL
                author:(YWCProfile *)author
-             latitude:(double)latitude
-            longitude:(double)longitude
-              address:(NSString *)address{
+             location:(YWClocationModel *)location
+         creationDate:(NSString *)creationDate{
     if (self = [super init]) {
         _titleNew = title;
         _textNew = textNew;
@@ -25,9 +26,8 @@
         _rating = rating;
         _imageURL = imageURL;
         _author = author;
-        _latitude = latitude;
-        _longitude = longitude;
-        _address = address;
+        _location = location;
+        _creationDate = creationDate;
     }
     return self;
 }
@@ -36,19 +36,23 @@
                                                   idUser:@""
                                                 imageURL:item[@"imageAuthor"]];
     
+    YWClocationModel *loc = [[YWClocationModel alloc]initWithLatitude:[[NSString stringWithFormat:@"%@",item[@"latitude"]] doubleValue]
+                                                            longitude:[[NSString stringWithFormat:@"%@",item[@"longitude"]] doubleValue]
+                                                              address:item[@"address"]];
+    
     YWCNewsModel * new = [[YWCNewsModel alloc]initWithTitleNew:item[@"title"]
                                                        textNew:item[@"text"]
                                                       stateNew:item[@"stateNew"]
-                                                        rating:4 imageURL:@""
+                                                        rating:[[NSString stringWithFormat:@"%@",item[@"rating"]] intValue]
+                                                      imageURL:@""
                                                         author:author
-                                                      latitude:[[NSString stringWithFormat:@"%@",item[@"latitude"]] doubleValue]
-                                                     longitude:[[NSString stringWithFormat:@"%@",item[@"longitude"]] doubleValue]
-                                                       address:item[@"address"]];
-    
-    
+                                                      location:loc
+                                                  creationDate:item[@"creationDate"]];
+    new.idNews = item[@"id"];
+    new.numberOfVotes = [[NSString stringWithFormat:@"%@",item[@"numberofvotes"]] intValue];
     return new;
-
-
+    
+    
 }
 
 +(NSDictionary *)dictionaryWithModel:(YWCNewsModel *)model{
@@ -58,11 +62,11 @@
                           @"imageURL":model.imageURL,
                           @"author":model.author.nameUser,
                           @"imageAuthor":model.author.imageURL,
-                          @"rating":[NSString stringWithFormat:@"%d",model.rating],
-                          @"latitude":[NSString stringWithFormat:@"%f",model.latitude],
-                          @"longitude":[NSString stringWithFormat:@"%f",model.longitude],
-                          @"address":model.address};
-    
+                          @"rating":@(model.rating),
+                          @"latitude":[NSString stringWithFormat:@"%f",model.location.latitude],
+                          @"longitude":[NSString stringWithFormat:@"%f",model.location.longitude],
+                          @"address":model.location.address,
+                          @"creationDate":model.creationDate};
     return dict;
 }
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
-@interface ViewController : UIViewController
+@interface YWCViewController : UIViewController
 - (IBAction)loginButton:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
