@@ -26,7 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *publishButton;
 - (IBAction)publiButton:(id)sender;
 - (IBAction)locationButton:(id)sender;
--(id)initWithUserProfile:(YWCProfile *)userProfile andLibrary:(YWCLibraryNews *)library;
+-(id)initWithlibrary:(YWCLibraryNews *)library;
 -(id)initWithNewsModel:(YWCNewsModel *)newsModel;
 
 @end

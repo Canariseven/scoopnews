@@ -23,6 +23,7 @@
 @property (nonatomic, strong) YWClocationModel *location;
 @property (nonatomic, strong) MSClient *client;
 @property (nonatomic, strong) NSString *creationDate;
+@property (nonatomic, strong) UIImage *image;
 +(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item;
 +(NSDictionary *)dictionaryWithModel:(YWCNewsModel *)model;
 -(id)initWithTitleNew:(NSString *)title
@@ -34,5 +35,5 @@
              location:(YWClocationModel *)location
          creationDate:(NSString *)creationDate;
 
-
+-(void)downloadImage;
 @end

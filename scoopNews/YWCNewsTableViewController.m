@@ -120,9 +120,7 @@
 
 -(void)addNew:(id)sender{
     self.arrayModel.client = self.client;
-
-    
-    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithUserProfile:self.arrayModel.user andLibrary:self.arrayModel];
+    YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithlibrary:self.arrayModel];
     [self.navigationController pushViewController:newVC animated:YES];
     
 }

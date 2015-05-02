@@ -23,8 +23,8 @@
           imageURL:(NSString *)imageURL;
 
 -(id)initWithClient:(MSClient *) client;
-- (BOOL)loadUserAuthInfo;
-- (void) saveAuthInfo;
+-(BOOL)loadUserAuthInfo;
+-(void)saveAuthInfo;
 -(void)getUserInfo;
 -(void)deleteUserOnDefault;
 -(void)downloadImage;

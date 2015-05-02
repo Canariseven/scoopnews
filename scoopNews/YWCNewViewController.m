@@ -24,18 +24,20 @@
 @property (nonatomic, strong) YWCLibraryNews *libraryNews;
 @property (nonatomic, strong) YWCProfile *userProfile;
 @property (nonatomic, strong) YWClocationModel *location;
+@property (nonatomic, strong) NSString *sasURL;
 @end
 
 @implementation YWCNewViewController
--(id)initWithUserProfile:(YWCProfile *)userProfile andLibrary:(YWCLibraryNews *)library{
+-(id)initWithlibrary:(YWCLibraryNews *)library{
     if (self = [super initWithNibName:nil bundle:nil]) {
-        _userProfile = userProfile;
+        _userProfile = library.user;
         _libraryNews = library;
     }
     return self;
 }
 -(id)initWithNewsModel:(YWCNewsModel *)newsModel{
     if (self = [super initWithNibName:nil bundle:nil]) {
+        _userProfile = newsModel.author;
         _model = newsModel;
     }
     return self;
@@ -56,25 +58,29 @@
                                                                              action:@selector(saveMyNew:)];
         self.navigationItem.rightBarButtonItem = save;
         self.segmentValorator.hidden = true;
-                    self.voteButton.hidden = YES;
         self.publishButton.hidden = false;
         self.dateNew.text = [NSString stringWithFormat:@"%@",[NSDate date]];
-        self.authorName.text = self.libraryNews.user.nameUser;
         if ( self.location == nil){
             self.location = [[YWClocationModel alloc]init];
         }
-            self.location.locationManager.delegate = self;
+        self.location.locationManager.delegate = self;
 
+        
     }else{
-//        self.publishButton.hidden = true;
+        self.publishButton.hidden = true;
         self.segmentValorator.hidden = false;
-        self.authorName.text = self.libraryNews.user.nameUser;
         self.dateNew.text = [NSString stringWithFormat:@"%@",[NSDate date]];
         self.titleNewTextField.text = self.model.titleNew;
         self.textNew.text = self.model.textNew;
         self.dateNew.text = self.model.creationDate;
-        self.authorName.text = self.model.author.nameUser;
     }
+
+    [self.userProfile downloadImage];
+    self.profilePhoto.image = self.userProfile.image;
+    self.authorName.text = self.userProfile.nameUser;
+    self.publishButton.layer.cornerRadius = self.publishButton.frame.size.height/2;
+    self.locationButton.layer.cornerRadius = self.locationButton.frame.size.height/2;
+    self.contentViewImageProfile.layer.cornerRadius = self.contentViewImageProfile.frame.size.height/2;
     
     
 }
@@ -85,8 +91,12 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [self setupKVO];
     [self sincronizeView];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self tearDownKVO];
 }
 
 - (void)choosePhoto:(id)sender
@@ -107,32 +117,26 @@
 {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.image.image = image;
-    
     [self obtenerImage:image];
     
 }
 -(void)obtenerImage:(UIImage *)image{
+    NSString *nameResource = [NSString stringWithFormat:@"%@-%@",self.userProfile.idUser,[NSDate date]];
+    NSDictionary *item = @{@"containerName":@"news",@"resourceName":nameResource};
+    NSDictionary *params = @{@"blobName":@"canarisevenblob",@"item":item};
     
-    NSDictionary *item = @{@"containerName":@"news",@"resourceName":@"casa.jpg"};
-    NSDictionary *params = @{@"blobName":@"casadddd.jpg",@"item":item};
     [self.libraryNews.client invokeAPI:@"geturlblob"
-                            body:nil
-                      HTTPMethod:@"get"
-                      parameters:params
-                         headers:nil
-                      completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                          NSLog(@"%@",result);
-//                          [self uploadImage:image withSasURL:[result valueForKey:@"sasUrl"] completionHandleSaS:^(id result, NSError *error) {
-//                              
-//                          }];
-                          NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
-
-                          NSURL *url = [NSURL URLWithString:[result valueForKey:@"sasUrl"]];
-                                                    NSLog(@"%@",url);
-                          [self uploadPhotoToAzureStorageWithData:imageData toURL:url];
-                          
-                      }];
+                                  body:nil
+                            HTTPMethod:@"get"
+                            parameters:params
+                               headers:nil
+                            completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                                self.sasURL = nameResource;
+                                NSURL *url = [NSURL URLWithString:[result valueForKey:@"sasUrl"]];
+                                NSLog(@"%@",url);
+                                [self uploadImage:image withSasURL:url];
+                                self.image.image = image;
+                            }];
 }
 // stop upload
 - (IBAction)cancelUpload:(id)sender {
@@ -141,70 +145,35 @@
     }
 }
 
-//- (void)uploadImage:(UIImage*)image withSasURL:(NSString *)sasUrl completionHandleSaS:(void (^)(id result, NSError *error))completion{
-//    NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
-//    
-//    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    config.HTTPMaximumConnectionsPerHost = 1;
-//    
-//    NSURLSession *upLoadSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-//    NSURL *blobURL = [NSURL URLWithString:sasUrl];
-//    
-//    config.HTTPAdditionalHeaders = @{@"api-key" : AZURE_KEY};
-//
-//
-//    
-//    
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:blobURL];
-//    [request setHTTPMethod:@"POST"];
-//    [request setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
-//    
-//    self.uploadTask = [upLoadSession uploadTaskWithRequest:request fromData:imageData];
-//    
-//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-//    
-//    [_uploadTask resume];
-//}
-
--(void) uploadPhotoToAzureStorageWithData: (NSData *) imageData toURL: (NSURL *) sasURL{
-    
+- (void)uploadImage:(UIImage*)image withSasURL:(NSURL *)sasUrl{
+    _progress.hidden = NO;
+    _progress.progress = 0;
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.6);
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    config.HTTPAdditionalHeaders = @{@"api-key" : AZURE_CONTENT_KEY};
-    
     NSURLSession *upLoadSession = [NSURLSession sessionWithConfiguration:config
-                                                                delegate:nil
+                                                                delegate:self
                                                            delegateQueue:nil];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:sasURL
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:sasUrl
                                                                 cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                             timeoutInterval:60.0];
-    
-    [request setHTTPMethod:@"PUT"];
-    [request addValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
-    
+    config.HTTPAdditionalHeaders = @{@"api-key" : AZURE_CONTENT_KEY};
     [request setHTTPBody:imageData];
+    [request setHTTPMethod:@"PUT"];
+    [request setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
+    self.uploadTask = [upLoadSession uploadTaskWithRequest:request fromData:imageData];
     
-    self.uploadTask = [upLoadSession uploadTaskWithRequest:request fromData:imageData completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSLog(@"%@",response);
-        }else{
-            NSLog(@"%@",error);
-        }
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-    }];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    [self.uploadTask resume];
+    [_uploadTask resume];
 }
+
 #pragma mark - NSURLSessionTaskDelegate methods
 
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
    didSendBodyData:(int64_t)bytesSent
     totalBytesSent:(int64_t)totalBytesSent
-totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
-{
+totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend{
     dispatch_async(dispatch_get_main_queue(), ^{
         [_progress setProgress:
          (double)totalBytesSent /
@@ -214,37 +183,35 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
-didCompleteWithError:(NSError *)error
-{
-    // 1
+didCompleteWithError:(NSError *)error{
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        //        _uploadView.hidden = YES;
-        [_progress setProgress:0.5];
+        [self finishUploadSincronizeViews];
     });
     
     if (!error) {
-        // 2
         dispatch_async(dispatch_get_main_queue(), ^{
-            //            [self refreshPhotos];
+            NSLog(@"%@",task.response);
         });
     } else {
-        // Alert for error
+        //error
     }
 }
 
+-(void)finishUploadSincronizeViews{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    _progress.hidden = YES;
+    _progress.progress = 0;
+}
 
-
-
-//(ResponseType type, id response)
 
 - (IBAction)publiButton:(id)sender {
-
+    
     
 }
 
 - (IBAction)locationButton:(id)sender {
-
+    
     YWCMapViewController *mapVC = [[YWCMapViewController alloc]initWithNewModelLocation:self.location];
     [self.navigationController pushViewController:mapVC animated:YES];
 }
@@ -256,12 +223,11 @@ didCompleteWithError:(NSError *)error
                                                textNew:self.textNew.text
                                               stateNew:@"noPublic"
                                                 rating:0
-                                              imageURL:@""
+                                              imageURL:self.sasURL
                                                 author:self.userProfile
                                               location:self.location
                                           creationDate:self.dateNew.text];
     MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.libraryNews.client];
-    
     NSDictionary *dict = [YWCNewsModel dictionaryWithModel:self.model];
     
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
@@ -278,11 +244,19 @@ didCompleteWithError:(NSError *)error
 
 - (IBAction)sendVote:(id)sender {
     NSNumber * puntos =[NSNumber numberWithInteger:self.segmentValorator.selectedSegmentIndex + 1];
-    self.voteButton.hidden = YES;
-    NSDictionary *dict = @{@"rating":puntos, @"idNews":self.model.idNews};
-    [self.model.client invokeAPI:@"setrating" body:nil HTTPMethod:@"GET" parameters:dict headers:nil completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-        NSLog(@"%@",response);
-    }];
+    self.segmentValorator.hidden = YES;
+    
+    NSDictionary *dict = @{@"rating":puntos,
+                           @"idNews":self.model.idNews};
+    
+    [self.model.client invokeAPI:@"setrating"
+                            body:nil
+                      HTTPMethod:@"GET"
+                      parameters:dict
+                         headers:nil
+                      completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                          NSLog(@"%@",response);
+                      }];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -293,7 +267,7 @@ didCompleteWithError:(NSError *)error
     [self zapLocationManager];
     if (self.location == nil) {
         CLLocation *loc = [locations lastObject];
-        self.location = [YWClocationModel locationWith:loc];        
+        self.location = [YWClocationModel locationWith:loc];
     }else{
         NSLog(@"No deberíamos llegar aquí jamás");
     }
@@ -304,6 +278,34 @@ didCompleteWithError:(NSError *)error
     [self.location.locationManager stopUpdatingLocation];
     self.location.locationManager.delegate = nil;
     self.location.locationManager = nil;
+}
+
+-(void)setupKVO{
+    NSArray *arr = [self.userProfile observableKeyNames];
+    for (NSString *key in arr) {
+        [self.userProfile addObserver:self
+                           forKeyPath:key
+                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                              context:NULL];
+    }
+}
+-(void)tearDownKVO{
+    NSArray *arr = [self.userProfile observableKeyNames];
+    for (NSString *key in arr) {
+        [self.userProfile removeObserver:self
+                              forKeyPath:key];
+    }
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath
+                     ofObject:(id)object
+                       change:(NSDictionary *)change
+                      context:(void *)context{
+    
+    if ([keyPath isEqualToString:@"nameUser"]) {
+        
+    }else if ([keyPath isEqualToString:@"image"]){
+        self.profilePhoto.image = self.userProfile.image;
+    }
 }
 
 @end

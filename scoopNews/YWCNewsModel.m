@@ -9,8 +9,11 @@
 #import "YWCNewsModel.h"
 #import "YWCProfile.h"
 #import "YWClocationModel.h"
-
+#import "services.h"
 @implementation YWCNewsModel
++(NSArray *)observableKey{
+    return @[@"image"];
+}
 -(id)initWithTitleNew:(NSString *)title
               textNew:(NSString *)textNew
              stateNew:(NSString *)stateNew
@@ -44,12 +47,13 @@
                                                        textNew:item[@"text"]
                                                       stateNew:item[@"stateNew"]
                                                         rating:[[NSString stringWithFormat:@"%@",item[@"rating"]] intValue]
-                                                      imageURL:@""
+                                                      imageURL:item[@"imageURL"]
                                                         author:author
                                                       location:loc
                                                   creationDate:item[@"creationDate"]];
     new.idNews = item[@"id"];
     new.numberOfVotes = [[NSString stringWithFormat:@"%@",item[@"numberofvotes"]] intValue];
+
     return new;
     
     
@@ -68,6 +72,23 @@
                           @"address":model.location.address,
                           @"creationDate":model.creationDate};
     return dict;
+}
+-(void)downloadImage{
+    if (self.imageURL != nil && self.imageURL.length > 0) {
+        NSURL *url = [NSURL URLWithString:self.imageURL];
+        [services downloadDataWithURL:url
+                  statusOperationWith:^(NSData *data, NSURLResponse *response, NSError *error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          self.image = [UIImage imageWithData:data];
+                      });
+                  } failure:^(NSURLResponse *response, NSError *error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          self.image = nil;
+                      });
+                  }];
+    }else{
+        self.image = nil;
+    }
 }
 
 @end

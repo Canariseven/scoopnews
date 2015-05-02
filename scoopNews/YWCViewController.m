@@ -60,6 +60,7 @@
         self.userNameLabel.text = @"Realiza Login";
         
     }else{
+        self.imageProfile.image = self.profile.image;
         self.myNewsButton.enabled = YES;
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
         [self.loginButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -80,12 +81,13 @@
     
     [lVC getAllNewsFromAzureWithClient:self.client andTable:self.table];
     
-    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:lVC withClient:self.client andTable:self.table mode:@"ALLNEWS"];
+    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:lVC
+                                                                              withClient:self.client
+                                                                                andTable:self.table
+                                                                                    mode:@"ALLNEWS"];
     
     // DELEGADO YWCLibraryNewsDelegate
     lVC.delegate = tVC;
-    
-    
     [self.navigationController pushViewController:tVC animated:YES];
 }
 
@@ -93,7 +95,10 @@
     YWCLibraryNews *lVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
     [lVC getMyNewsFromAzureWithClient:self.client andTable:self.table];
     
-    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:lVC withClient:self.client andTable:self.table mode:@"MYNEWS"];
+    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:lVC
+                                                                              withClient:self.client
+                                                                                andTable:self.table
+                                                                                    mode:@"MYNEWS"];
     
     // DELEGADO YWCLibraryNewsDelegate
     lVC.delegate = tVC;

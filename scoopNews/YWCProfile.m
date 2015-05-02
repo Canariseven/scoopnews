@@ -10,12 +10,9 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "services.h"
 @implementation YWCProfile
-
 -(NSArray *)observableKeyNames{
     return @[@"nameUser",@"image"];
 }
-
-
 
 
 -(void)downloadImage{
@@ -63,8 +60,6 @@
     if (self.idUser) {
         self.client.currentUser = [[MSUser alloc]initWithUserId:self.idUser];
         self.client.currentUser.mobileServiceAuthenticationToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"tokenFB"];
-        
-        
         return TRUE;
     }
     
