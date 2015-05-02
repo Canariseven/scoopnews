@@ -11,6 +11,7 @@
 @import UIKit;
 @class YWCProfile;
 @class YWClocationModel;
+
 @interface YWCNewsModel : NSObject
 @property (nonatomic, copy) NSString *idNews;
 @property (nonatomic, copy) NSString *titleNew;
@@ -24,7 +25,10 @@
 @property (nonatomic, strong) MSClient *client;
 @property (nonatomic, strong) NSString *creationDate;
 @property (nonatomic, strong) UIImage *image;
-+(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item;
+
++(NSArray *)observableKeyNames;
+
++(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item client:(MSClient *)client;
 +(NSDictionary *)dictionaryWithModel:(YWCNewsModel *)model;
 -(id)initWithTitleNew:(NSString *)title
               textNew:(NSString *)textNew
@@ -33,7 +37,8 @@
              imageURL:(NSString *)imageURL
                author:(YWCProfile *)author
              location:(YWClocationModel *)location
-         creationDate:(NSString *)creationDate;
+         creationDate:(NSString *)creationDate
+               client:(MSClient *)client;
 
--(void)downloadImage;
+-(void)getSasImage;
 @end

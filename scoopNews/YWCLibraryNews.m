@@ -38,9 +38,10 @@
             NSArray *datosAzure = [result.items mutableCopy];
             for (id item in datosAzure) {
                 NSLog(@"item -> %@", item);
-
-                YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item];
-                    [new downloadImage];
+                
+                YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item client:table.client];
+                new.client = self.client;
+                [new getSasImage];
                 [self addAllNewsObject:new];
                 
             }
@@ -60,8 +61,8 @@
             NSArray *datosAzure = [result.items mutableCopy];
             for (id item in datosAzure) {
                 NSLog(@"item -> %@", item);
-                YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item];
-                                    [new downloadImage];
+                YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item client:table.client];
+                [new getSasImage];
                 [self addMyNewsObject:new];
                 
             }

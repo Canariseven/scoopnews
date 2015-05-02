@@ -11,24 +11,69 @@
 
 @implementation YWCMyNewsTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
 -(void)sincronizeView{
     self.titleNew.text = self.model.titleNew;
-    self.ratingLabel.text = [NSString stringWithFormat:@"%f.0",self.model.rating/self.model.numberOfVotes ];
+    if (self.model.numberOfVotes == 0) {
+        self.ratingLabel.text = @"0";
+    }else{
+        self.ratingLabel.text = [NSString stringWithFormat:@"%f.0",self.model.rating/self.model.numberOfVotes ];
+    }
     
+    self.image.image = self.model.image;
+    [self setupKVO];
+}
+
+- (void)awakeFromNib {
+    // Initialization code
     
+}
+-(void)dealloc{
+    [self tearDownKVO];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
-
-- (IBAction)Public:(id)sender {
+-(void)setupKVO{
+    
+    
+    [self.model addObserver:self
+                 forKeyPath:@"image"
+                    options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                    context:NULL];
+    
+}
+-(void)tearDownKVO{
+    
+    if (self.model.observationInfo != nil) {
+        [self.model removeObserver:self
+                        forKeyPath:@"image"];
+    }
+    
+    
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath
+                     ofObject:(id)object
+                       change:(NSDictionary *)change
+                      context:(void *)context{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.image.image = self.model.image;
+        
+    });
+    
+}
+-(void) prepareForReuse{
+    [super prepareForReuse];
+    // hacemos limpieza
+    [self cleanUp];
 }
 
-
+-(void) cleanUp{
+    [self tearDownKVO];
+    self.image.image = nil;
+    self.titleNew.text = nil;
+    self.ratingLabel.text = nil;
+}
 @end

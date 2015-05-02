@@ -11,7 +11,7 @@
 #import "YWClocationModel.h"
 #import "services.h"
 @implementation YWCNewsModel
-+(NSArray *)observableKey{
++(NSArray *)observableKeyNames{
     return @[@"image"];
 }
 -(id)initWithTitleNew:(NSString *)title
@@ -21,7 +21,8 @@
              imageURL:(NSString *)imageURL
                author:(YWCProfile *)author
              location:(YWClocationModel *)location
-         creationDate:(NSString *)creationDate{
+         creationDate:(NSString *)creationDate
+               client:(MSClient *)client{
     if (self = [super init]) {
         _titleNew = title;
         _textNew = textNew;
@@ -31,10 +32,11 @@
         _author = author;
         _location = location;
         _creationDate = creationDate;
+        _client = client;
     }
     return self;
 }
-+(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item{
++(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item client:(MSClient *)client{
     YWCProfile *author = [[YWCProfile alloc]initWithName:item[@"author"]
                                                   idUser:@""
                                                 imageURL:item[@"imageAuthor"]];
@@ -50,10 +52,11 @@
                                                       imageURL:item[@"imageURL"]
                                                         author:author
                                                       location:loc
-                                                  creationDate:item[@"creationDate"]];
+                                                  creationDate:item[@"creationDate"]
+                                                        client:client];
     new.idNews = item[@"id"];
     new.numberOfVotes = [[NSString stringWithFormat:@"%@",item[@"numberofvotes"]] intValue];
-
+    
     return new;
     
     
@@ -73,21 +76,72 @@
                           @"creationDate":model.creationDate};
     return dict;
 }
--(void)downloadImage{
+-(void)downloadImageWithURL:(NSURL *)sasURL {
+    
+    [services downloadDataWithURL:sasURL
+              statusOperationWith:^(NSData *data,
+                                    NSURLResponse *response,
+                                    NSError *error) {
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      self.image = [UIImage imageWithData:data];
+                      
+                      
+                  });
+                  
+              } failure:^(NSURLResponse *response, NSError *error) {
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      self.image = nil;
+                  });
+                  
+              }];
+    
+}
+- (void)handleSaSURLToDownload:(NSURL *)theUrl{
+    
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:theUrl];
+    
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
+    
+    NSURLSessionDownloadTask * downloadTask = [[NSURLSession sharedSession]downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        
+        if (!error) {
+            
+            NSLog(@"resultado --> %@", response);
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+            self.image = image;
+        }
+        
+        
+        
+    }];
+    [downloadTask resume];
+    
+}
+-(void)getSasImage{
     if (self.imageURL != nil && self.imageURL.length > 0) {
-        NSURL *url = [NSURL URLWithString:self.imageURL];
-        [services downloadDataWithURL:url
-                  statusOperationWith:^(NSData *data, NSURLResponse *response, NSError *error) {
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          self.image = [UIImage imageWithData:data];
-                      });
-                  } failure:^(NSURLResponse *response, NSError *error) {
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          self.image = nil;
-                      });
-                  }];
-    }else{
-        self.image = nil;
+        NSString *permissions = @"r";
+        NSString *nameResource = self.imageURL;
+        NSDictionary *item = @{@"containerName":@"news",
+                               @"resourceName":nameResource};
+        
+        NSDictionary *params = @{@"blobName":nameResource,
+                                 @"item":item,
+                                 @"permissions":permissions};
+        
+        [self.client invokeAPI:@"geturlblob"
+                          body:nil
+                    HTTPMethod:@"get"
+                    parameters:params
+                       headers:nil
+                    completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                        if (!error) {
+                            NSURL *url = [NSURL URLWithString:[result valueForKey:@"sasUrl"]];
+                            [self handleSaSURLToDownload:url];
+                        }
+                    }];
     }
 }
 

@@ -64,7 +64,7 @@
             self.location = [[YWClocationModel alloc]init];
         }
         self.location.locationManager.delegate = self;
-
+        
         
     }else{
         self.publishButton.hidden = true;
@@ -74,13 +74,16 @@
         self.textNew.text = self.model.textNew;
         self.dateNew.text = self.model.creationDate;
     }
-
+    
     [self.userProfile downloadImage];
     self.profilePhoto.image = self.userProfile.image;
     self.authorName.text = self.userProfile.nameUser;
     self.publishButton.layer.cornerRadius = self.publishButton.frame.size.height/2;
     self.locationButton.layer.cornerRadius = self.locationButton.frame.size.height/2;
     self.contentViewImageProfile.layer.cornerRadius = self.contentViewImageProfile.frame.size.height/2;
+    self.image.image = self.model.image;
+    self.profilePhoto.image = self.userProfile.image;
+    
     
     
 }
@@ -121,9 +124,13 @@
     
 }
 -(void)obtenerImage:(UIImage *)image{
-    NSString *nameResource = [NSString stringWithFormat:@"%@-%@",self.userProfile.idUser,[NSDate date]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"dd_m_yyyy_HH_mm_ss"];
+    NSString *dateSTR = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSString *nameResource = [NSString stringWithFormat:@"%@_%@.jpg",self.userProfile.idUser,dateSTR];
     NSDictionary *item = @{@"containerName":@"news",@"resourceName":nameResource};
-    NSDictionary *params = @{@"blobName":@"canarisevenblob",@"item":item};
+    NSDictionary *params = @{@"blobName":nameResource,@"item":item,@"permissions":@"w"};
     
     [self.libraryNews.client invokeAPI:@"geturlblob"
                                   body:nil
@@ -184,7 +191,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend{
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error{
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self finishUploadSincronizeViews];
     });
@@ -226,7 +233,8 @@ didCompleteWithError:(NSError *)error{
                                               imageURL:self.sasURL
                                                 author:self.userProfile
                                               location:self.location
-                                          creationDate:self.dateNew.text];
+                                          creationDate:self.dateNew.text
+                                                client:self.userProfile.client];
     MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.libraryNews.client];
     NSDictionary *dict = [YWCNewsModel dictionaryWithModel:self.model];
     
@@ -288,24 +296,41 @@ didCompleteWithError:(NSError *)error{
                               options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                               context:NULL];
     }
+    
+    [self.model addObserver:self
+                 forKeyPath:@"image"
+                    options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                    context:NULL];
 }
 -(void)tearDownKVO{
     NSArray *arr = [self.userProfile observableKeyNames];
     for (NSString *key in arr) {
         [self.userProfile removeObserver:self
                               forKeyPath:key];
+        
+    }
+    
+    
+    if (self.model.observationInfo != nil) {
+        [self.model removeObserver:self
+                        forKeyPath:@"image"];
     }
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath
                      ofObject:(id)object
                        change:(NSDictionary *)change
                       context:(void *)context{
-    
-    if ([keyPath isEqualToString:@"nameUser"]) {
-        
-    }else if ([keyPath isEqualToString:@"image"]){
-        self.profilePhoto.image = self.userProfile.image;
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([keyPath isEqualToString:@"nameUser"]) {
+            
+        }else if ([keyPath isEqualToString:@"image"] && [object isKindOfClass:[YWCProfile class]]){
+            self.profilePhoto.image = self.userProfile.image;
+        }else{
+            self.image.image = self.model.image;
+        }
+    });
 }
+
+
 
 @end

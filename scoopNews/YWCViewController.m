@@ -18,6 +18,8 @@
 @property (nonatomic, strong) MSClient *client;
 @property (nonatomic, strong) MSTable *table;
 @property (nonatomic, strong) YWCProfile *profile;
+@property (nonatomic, strong) YWCLibraryNews *allNewsLibraryVC;
+@property (nonatomic, strong) YWCLibraryNews *myNewsLibraryVC;
 @end
 
 @implementation YWCViewController
@@ -33,17 +35,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.profile = [[YWCProfile alloc]initWithClient:self.client];
-    
+    self.allNewsLibraryVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
+    self.myNewsLibraryVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self sincronizeView];
     [self setupKVO];
 }
+
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.contentImageView.layer.cornerRadius = self.contentImageView.frame.size.height/2;
 }
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self tearDownKVO];
@@ -77,31 +83,25 @@
 }
 
 - (IBAction)allNews:(id)sender {
-    YWCLibraryNews *lVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
-    
-    [lVC getAllNewsFromAzureWithClient:self.client andTable:self.table];
-    
-    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:lVC
+    [self.allNewsLibraryVC getAllNewsFromAzureWithClient:self.client andTable:self.table];
+    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:self.allNewsLibraryVC
                                                                               withClient:self.client
                                                                                 andTable:self.table
                                                                                     mode:@"ALLNEWS"];
     
     // DELEGADO YWCLibraryNewsDelegate
-    lVC.delegate = tVC;
+    self.allNewsLibraryVC.delegate = tVC;
     [self.navigationController pushViewController:tVC animated:YES];
 }
 
 - (IBAction)myNews:(id)sender {
-    YWCLibraryNews *lVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
-    [lVC getMyNewsFromAzureWithClient:self.client andTable:self.table];
-    
-    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:lVC
+    [self.myNewsLibraryVC getMyNewsFromAzureWithClient:self.client andTable:self.table];
+    YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:self.myNewsLibraryVC
                                                                               withClient:self.client
                                                                                 andTable:self.table
                                                                                     mode:@"MYNEWS"];
-    
     // DELEGADO YWCLibraryNewsDelegate
-    lVC.delegate = tVC;
+    self.myNewsLibraryVC.delegate = tVC;
     
     
     [self.navigationController pushViewController:tVC animated:YES];
