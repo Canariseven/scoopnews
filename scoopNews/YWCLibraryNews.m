@@ -12,26 +12,18 @@
 @implementation YWCLibraryNews
 
 
--(void)addAllNewsObject:(YWCNewsModel *)object{
-    
+-(void)addObject:(YWCNewsModel *)object toArray:(NSMutableArray *)array{
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idNews == %@", object.idNews];
-    NSArray *filteredArray = [self.allNews filteredArrayUsingPredicate:predicate];
+    NSMutableArray *filteredArray = [array filteredArrayUsingPredicate:predicate].mutableCopy;
+    
     if (filteredArray.count >0) {
         YWCNewsModel * model = filteredArray.lastObject;
-        model = object;
+        NSInteger anIndex = [array indexOfObject:model];
+        [array removeObject:model];
+        [array insertObject:object atIndex:anIndex];
+        
     }else{
-        [self.allNews insertObject:object atIndex:self.allNews.count];
-    }
-}
--(void)addMyNewsObject:(YWCNewsModel *)object{
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idNews == %@", object.idNews];
-    NSArray *filteredArray = [self.myNews filteredArrayUsingPredicate:predicate];
-    if (filteredArray.count >0) {
-        YWCNewsModel * model = filteredArray.lastObject;
-        model = object;
-    }else{
-        [self.myNews insertObject:object atIndex:self.myNews.count];
+        [array addObject:object];
     }
 }
 
@@ -44,34 +36,26 @@
     return self;
 }
 
--(void)getAllNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table{
+-(void)loadItemsFromAzureForMode:(NSString *)mode table:(MSTable *)table{
     NSPredicate *predicate;
-    if (self.user != nil) {
-        predicate = [NSPredicate predicateWithFormat:@"(userId != %@) OR (userId == %@)",self.user.idUser,NULL];
-    }
-    [table readWithPredicate:predicate completion:^(MSQueryResult *result, NSError *error) {
-        if (!error) {
-            NSArray *datosAzure = [result.items mutableCopy];
-            for (id item in datosAzure) {
-                NSLog(@"item -> %@", item);
-                
-                YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item client:table.client];
-                new.client = self.client;
-                [new getSasImage];
-                [self addAllNewsObject:new];
-                
-            }
-            [self.delegate libraryNews:self];
-        }else{
-            NSLog(@"%@",error);
+    NSMutableArray *array;
+    
+    if ([mode isEqualToString:@"ALLNEWS"]){
+        if (self.user != nil) {
+            predicate = [NSPredicate predicateWithFormat:@"(stateNew == %@)",@"public"];
         }
-    }];
+        array = self.allNews;
+    }else{
+        predicate = [NSPredicate predicateWithFormat:@"userID == %@",self.user.idUser];
+        array = self.myNews;
+    }
+    [self getItemsFromAzureWithTable:table forArray:array andPredicate:predicate];
+    
 }
 
--(void)getMyNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table{
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@",self.user.idUser];
-    
+-(void)getItemsFromAzureWithTable:(MSTable *)table
+                          forArray:(NSMutableArray *)array
+                      andPredicate:(NSPredicate *)predicate{
     [table readWithPredicate:predicate completion:^(MSQueryResult *result, NSError *error) {
         if (!error) {
             NSArray *datosAzure = [result.items mutableCopy];
@@ -79,7 +63,7 @@
                 NSLog(@"item -> %@", item);
                 YWCNewsModel * new = [YWCNewsModel modelWithDictionary:item client:table.client];
                 [new getSasImage];
-                [self addMyNewsObject:new];
+                [self addObject:new toArray:array];
                 
             }
             [self.delegate libraryNews:self];
@@ -88,7 +72,6 @@
             NSLog(@"%@",error);
         }
     }];
-    
     
 }
 

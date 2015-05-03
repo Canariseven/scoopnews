@@ -12,6 +12,8 @@
 #import "YWCLoginViewController.h"
 #import "YWCProfile.h"
 #import "services.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 @interface YWCViewController ()
 - (IBAction)allNews:(id)sender;
 - (IBAction)myNews:(id)sender;
@@ -34,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.screenName = @"Menu Screen";
     self.profile = [[YWCProfile alloc]initWithClient:self.client];
     self.allNewsLibraryVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
     self.myNewsLibraryVC = [[YWCLibraryNews alloc]initWithUser:self.profile];
@@ -58,6 +61,7 @@
 -(void)sincronizeView{
     if (![self.profile loadUserAuthInfo]) {
         // NO LOGIN
+        self.profile.statusLogin = NO;
         self.myNewsButton.enabled = NO;
         [self.myNewsButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
@@ -66,6 +70,7 @@
         self.userNameLabel.text = @"Realiza Login";
         
     }else{
+        self.profile.statusLogin = YES;
         self.imageProfile.image = self.profile.image;
         self.myNewsButton.enabled = YES;
         [self.myNewsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -84,11 +89,20 @@
 }
 
 - (IBAction)allNews:(id)sender {
-    [self.allNewsLibraryVC getAllNewsFromAzureWithClient:self.client andTable:self.table];
+    NSString * modePresent= @"ALLNEWS";
+    id<GAITracker> tracker = [GAI sharedInstance].defaultTracker;
+    [tracker send:[GAIDictionaryBuilder createEventWithCategory:@"Consulta de todas las noticias"
+                                                         action:@"Consulta"
+                                                          label:nil
+                                                          value:nil].build];
+    
+    
+
+    [self.allNewsLibraryVC loadItemsFromAzureForMode:modePresent table:self.table];
     YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:self.allNewsLibraryVC
                                                                               withClient:self.client
                                                                                 andTable:self.table
-                                                                                    mode:@"ALLNEWS"];
+                                                                                    mode:modePresent];
     
     // DELEGADO YWCLibraryNewsDelegate
     self.allNewsLibraryVC.delegate = tVC;
@@ -96,11 +110,19 @@
 }
 
 - (IBAction)myNews:(id)sender {
-    [self.myNewsLibraryVC getMyNewsFromAzureWithClient:self.client andTable:self.table];
+    NSString * modePresent= @"MYNEWS";
+    
+    id<GAITracker> tracker = [GAI sharedInstance].defaultTracker;
+    [tracker send:[GAIDictionaryBuilder createEventWithCategory:@"Consulta de las noticias propias"
+                                                         action:@"Consulta"
+                                                          label:nil
+                                                          value:nil].build];
+    
+    [self.myNewsLibraryVC loadItemsFromAzureForMode:modePresent table:self.table];
     YWCNewsTableViewController *tVC = [[YWCNewsTableViewController alloc]initWithAllNews:self.myNewsLibraryVC
                                                                               withClient:self.client
                                                                                 andTable:self.table
-                                                                                    mode:@"MYNEWS"];
+                                                                                    mode:modePresent];
     // DELEGADO YWCLibraryNewsDelegate
     self.myNewsLibraryVC.delegate = tVC;
     
@@ -109,6 +131,7 @@
 }
 
 - (IBAction)loginButton:(id)sender {
+    self.profile.statusLogin = !self.profile.statusLogin;
     [self.profile deleteUserOnDefault];
     YWCLoginViewController *loginVC = [[YWCLoginViewController alloc]initWithClient:self.client andUser:self.profile];
     [self.navigationController pushViewController:loginVC animated:YES];

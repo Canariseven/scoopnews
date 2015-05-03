@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic, strong) MSClient *client;
+@property (nonatomic) BOOL statusLogin;
 @property (nonatomic, strong) UIImage *image;
 +(NSArray *)observableKeyNames;
 

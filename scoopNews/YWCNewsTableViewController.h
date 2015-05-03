@@ -5,7 +5,7 @@
 //  Created by Carmelo Ruymán Quintana Santana on 29/4/15.
 //  Copyright (c) 2015 Carmelo Ruymán Quintana Santana. All rights reserved.
 //
-
+#import "GAITrackedViewController.h"
 #import <UIKit/UIKit.h>
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "YWCLibraryNews.h"
@@ -17,7 +17,7 @@
 //@end
 
 
-@interface YWCNewsTableViewController : UIViewController<YWCLibraryNewsDelegate>
+@interface YWCNewsTableViewController : GAITrackedViewController<YWCLibraryNewsDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 //@property (weak, nonatomic) id<YWCnewsTableViewControllerDelegate> delegate;
 -(id)initWithAllNews:(YWCLibraryNews *)arrayModel withClient:(MSClient *)client andTable:(MSTable *)table mode:(NSString *)mode;

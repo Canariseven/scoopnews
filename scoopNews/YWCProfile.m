@@ -80,6 +80,7 @@
         // p.e: obtenemos la url de la foto de perfil
         self.imageURL = result[@"picture"][@"data"][@"url"];
         self.nameUser = result[@"name"];
+        self.statusLogin = YES;
         [self downloadImage];
     }];
 }

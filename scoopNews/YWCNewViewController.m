@@ -15,7 +15,12 @@
 #import "YWClocationModel.h"
 #import "YWCMapViewController.h"
 #import "settings.h"
+
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 @interface YWCNewViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, NSURLSessionTaskDelegate,CLLocationManagerDelegate>
+
+@property (nonatomic, copy) NSString *statusPublic;
 @property (weak, nonatomic) IBOutlet UIProgressView *progress;
 @property (nonatomic, strong) NSURLSessionUploadTask *uploadTask;
 @property (nonatomic, strong) NSURLSession *mySession;
@@ -24,7 +29,7 @@
 @property (nonatomic, strong) YWCLibraryNews *libraryNews;
 @property (nonatomic, strong) YWCProfile *userProfile;
 @property (nonatomic, strong) YWClocationModel *location;
-@property (nonatomic, strong) NSString *sasURL;
+@property (nonatomic, copy) NSString *sasURL;
 @end
 
 @implementation YWCNewViewController
@@ -32,7 +37,7 @@
     if (self = [super initWithNibName:nil bundle:nil]) {
         _userProfile = library.user;
         _libraryNews = library;
-
+        
     }
     return self;
 }
@@ -45,9 +50,11 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.progress.hidden = YES;
+
     // Do any additional setup after loading the view.
-    
+    self.screenName = @"Detail Screen";
 }
 
 -(void)sincronizeView{
@@ -68,12 +75,22 @@
         self.location.locationManager.delegate = self;
         self.voteButton.hidden = YES;
     }else{
-        self.publishButton.hidden = true;
         self.segmentValorator.hidden = false;
         self.dateNew.text = [NSString stringWithFormat:@"%@",[NSDate date]];
         self.titleNewTextField.text = self.model.titleNew;
         self.textNew.text = self.model.textNew;
         self.dateNew.text = self.model.creationDate;
+    }
+    if (self.model.author.idUser != self.userProfile.idUser) {
+        self.publishButton.hidden = true;
+    }
+    if (self.userProfile.statusLogin == NO ) {
+        self.publishButton.hidden = true;
+    }
+    if ([self.model.stateNew isEqualToString:@"public"] || [self.model.stateNew isEqualToString:@"toPublic"]) {
+        self.publishButton.backgroundColor = [UIColor grayColor];
+        [self.publishButton setTitle:@"Publicada" forState:UIControlStateDisabled];
+        self.publishButton.enabled = NO;
     }
     
     [self.userProfile downloadImage];
@@ -121,7 +138,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-
+    
     __block UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
@@ -144,12 +161,12 @@
     });
     
     [self dismissViewControllerAnimated:YES completion:nil];
-
-  
+    
+    
     
 }
 -(void)obtenerImage:(UIImage *)image{
-   
+    
     NSDictionary *item = @{@"containerName":@"news",@"resourceName":self.sasURL};
     NSDictionary *params = @{@"blobName":self.sasURL,@"item":item,@"permissions":@"w"};
     
@@ -164,12 +181,6 @@
                                 [self uploadImage:image withSasURL:url];
                                 self.image.image = image;
                             }];
-}
-// stop upload
-- (IBAction)cancelUpload:(id)sender {
-    if (_uploadTask.state == NSURLSessionTaskStateRunning) {
-        [_uploadTask cancel];
-    }
 }
 
 - (void)uploadImage:(UIImage*)image withSasURL:(NSURL *)sasUrl{
@@ -220,7 +231,13 @@ didCompleteWithError:(NSError *)error{
     if (!error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"%@",task.response);
-
+            id<GAITracker> tracker = [GAI sharedInstance].defaultTracker;
+            [tracker send:[GAIDictionaryBuilder createEventWithCategory:@"Nueva noticia Creada"
+                                                                 action:@"Creación"
+                                                                  label:self.userProfile.idUser
+                                                                  value:nil].build];
+            
+            
             [self.navigationController popViewControllerAnimated:YES];
         });
     } else {
@@ -236,8 +253,30 @@ didCompleteWithError:(NSError *)error{
 
 
 - (IBAction)publiButton:(id)sender {
+    if ([self.model.stateNew isEqualToString:@"noPublic"]) {
+        self.model.stateNew = @"toPublic";
+        
+        self.publishButton.backgroundColor = [UIColor greenColor];
+        [self checkUploadStatusPublic];
+    }
     
-    
+}
+
+-(void)checkUploadStatusPublic{
+    if (self.model.idNews.length >0) {
+        // Actualizar
+        MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.model.client];
+        NSDictionary *dict = [YWCNewsModel dictionaryWithModelToUpdate:self.model];
+        
+        [table update:dict completion:^(NSDictionary *item, NSError *error) {
+            if (!error){
+                NSLog(@"%@",item);
+            }else{
+                NSLog(@"%@",error);
+            }
+            
+        }];
+    }
 }
 
 - (IBAction)locationButton:(id)sender {
@@ -251,7 +290,7 @@ didCompleteWithError:(NSError *)error{
     
     self.model = [[YWCNewsModel alloc]initWithTitleNew:self.titleNewTextField.text
                                                textNew:self.textNew.text
-                                              stateNew:@"noPublic"
+                                              stateNew:self.statusPublic
                                                 rating:0
                                               imageURL:self.sasURL
                                                 author:self.userProfile
@@ -259,14 +298,14 @@ didCompleteWithError:(NSError *)error{
                                           creationDate:self.dateNew.text
                                                 client:self.userProfile.client
                                                  image:self.image.image];
-
+    
     MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.libraryNews.client];
     NSDictionary *dict = [YWCNewsModel dictionaryWithModel:self.model];
     
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
         if (!error) {
             [self obtenerImage:self.image.image];
-
+            
         }else{
             NSLog(@"Error %@",error);
         }

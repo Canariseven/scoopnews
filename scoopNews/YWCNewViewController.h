@@ -5,13 +5,15 @@
 //  Created by Carmelo Ruymán Quintana Santana on 29/4/15.
 //  Copyright (c) 2015 Carmelo Ruymán Quintana Santana. All rights reserved.
 //
+
+#import "GAITrackedViewController.h"
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import <UIKit/UIKit.h>
 @import Foundation;
 @class YWCProfile;
 @class YWCLibraryNews;
 @class YWCNewsModel;
-@interface YWCNewViewController : UIViewController
+@interface YWCNewViewController : GAITrackedViewController
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UITextView *textNew;
 @property (weak, nonatomic) IBOutlet UIView *middleView;

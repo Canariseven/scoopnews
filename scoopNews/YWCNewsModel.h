@@ -30,6 +30,7 @@
 
 +(YWCNewsModel *)modelWithDictionary:(NSDictionary *)item client:(MSClient *)client;
 +(NSDictionary *)dictionaryWithModel:(YWCNewsModel *)model;
++(NSDictionary *)dictionaryWithModelToUpdate:(YWCNewsModel *)model;
 -(id)initWithTitleNew:(NSString *)title
               textNew:(NSString *)textNew
              stateNew:(NSString *)stateNew

@@ -33,7 +33,6 @@
 
 -(YWCNewsModel *)newFromAllNewsAtIndexPath:(NSIndexPath *)indexPath;
 -(YWCNewsModel *)newFromMyNewsAtIndexPath:(NSIndexPath *)indexPath;
--(void)getAllNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
--(void)getMyNewsFromAzureWithClient:(MSClient *)client andTable:(MSTable *)table;
+-(void)loadItemsFromAzureForMode:(NSString *)mode table:(MSTable *)table;
 
 @end

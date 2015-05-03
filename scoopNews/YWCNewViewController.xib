@@ -123,7 +123,7 @@
                                 <constraint firstAttribute="height" constant="50" id="CIT-fV-exx"/>
                                 <constraint firstAttribute="width" constant="50" id="VFe-64-AWL"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
                             <state key="normal" title="Location">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -194,7 +194,7 @@
                                 <constraint firstAttribute="height" constant="50" id="83h-B2-XNI"/>
                                 <constraint firstAttribute="width" constant="50" id="AAF-Yj-3JZ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
                             <state key="normal" title="Publicar">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

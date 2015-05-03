@@ -13,6 +13,9 @@
 #import "YWCNewViewController.h"
 #import "YWCProfile.h"
 #import "YWClocationModel.h"
+
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 @interface YWCNewsTableViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) YWCLibraryNews *arrayModel;
 @property (nonatomic, strong) NSString *modePresent;
@@ -39,7 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.screenName = @"Table Screen";
     if ([self.modePresent  isEqual: @"ALLNEWS"]) {
         UINib *nib = [UINib nibWithNibName:@"YWCGeneralNewsTableViewCell" bundle:nil];
         [self.tableView registerNib:nib forCellReuseIdentifier:@"generalCellID"];
@@ -58,12 +61,7 @@
 }
 -(void)refresFromServer:(UIRefreshControl *)refreshControl {
     [refreshControl endRefreshing];
-    if ([self.modePresent  isEqual: @"ALLNEWS"]) {
-        [self.arrayModel getAllNewsFromAzureWithClient:self.client andTable:self.table];
-    }else{
-        [self.arrayModel getMyNewsFromAzureWithClient:self.client andTable:self.table];
-    }
-    
+    [self.arrayModel loadItemsFromAzureForMode:self.modePresent table:self.table];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -127,12 +125,25 @@
         model = [self.arrayModel newFromMyNewsAtIndexPath:indexPath];
     }
     model.client = self.client;
+    if ([model.author.nameUser isEqualToString:self.arrayModel.user.nameUser]) {
+        model.author.statusLogin = YES;
+    }
+    
+    id<GAITracker> tracker = [GAI sharedInstance].defaultTracker;
+    [tracker send:[GAIDictionaryBuilder createEventWithCategory:@"Consulta de una noticia"
+                                                         action:@"Consulta"
+                                                          label:model.titleNew
+                                                          value:nil].build];
+    
+    
+    
     YWCNewViewController *shownNewVc= [[YWCNewViewController alloc]initWithNewsModel:model];
     [self.navigationController pushViewController:shownNewVc animated:YES];
 }
 
 -(void)addNew:(id)sender{
     self.arrayModel.client = self.client;
+    
     YWCNewViewController *newVC = [[YWCNewViewController alloc]initWithlibrary:self.arrayModel];
     [self.navigationController pushViewController:newVC animated:YES];
     

@@ -24,7 +24,7 @@
     if (self.model.numberOfVotes == 0) {
         self.ratingLabel.text = @"0";
     }else{
-        self.ratingLabel.text = [NSString stringWithFormat:@"%.1f",self.model.rating/self.model.numberOfVotes ];
+        self.ratingLabel.text = [NSString stringWithFormat:@"%.2f",self.model.rating/self.model.numberOfVotes ];
     }
     
     self.titleNew.text = self.model.titleNew;

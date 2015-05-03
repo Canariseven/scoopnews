@@ -81,6 +81,24 @@
                           @"numberofvotes":@0};
     return dict;
 }
+
++(NSDictionary *)dictionaryWithModelToUpdate:(YWCNewsModel *)model{
+    NSDictionary *dict= @{@"title":model.titleNew,
+                          @"text":model.textNew,
+                          @"stateNew":model.stateNew,
+                          @"imageURL":model.imageURL,
+                          @"author":model.author.nameUser,
+                          @"imageAuthor":model.author.imageURL,
+                          @"rating":@(model.rating),
+                          @"latitude":[NSString stringWithFormat:@"%f",model.location.latitude],
+                          @"longitude":[NSString stringWithFormat:@"%f",model.location.longitude],
+                          @"address":model.location.address,
+                          @"creationDate":model.creationDate,
+                          @"numberofvotes":@(model.numberOfVotes),
+                          @"id":model.idNews};
+    return dict;
+}
+
 -(void)downloadImageWithURL:(NSURL *)sasURL {
     
     [services downloadDataWithURL:sasURL

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "YWCViewController.h"
+#import "GAI.h"
 @interface AppDelegate ()
 @property (nonatomic, strong) MSClient *client;
 @property (nonatomic, strong) MSTable *table;
@@ -18,7 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [self configureAzure];
@@ -26,6 +27,20 @@
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = nav;
+    
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        #ifdef __IPHONE_8_0
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound
+                                                                                             |UIUserNotificationTypeBadge
+                                                                                             |UIUserNotificationTypeAlert) categories:nil];
+        [application registerUserNotificationSettings:settings];
+        #endif
+    } else {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:myTypes];
+    }
+    NSString * deviceID = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    NSLog(@"DeviceId : %@", deviceID);
     // Override point for customization after application launch.
     return YES;
 }
@@ -51,6 +66,48 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+-(void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    NSCharacterSet * chacracterSet = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
+    NSString * deviceTokenString = [[(deviceToken.description) stringByTrimmingCharactersInSet:chacracterSet]stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"Token Push >>>>>>  %@",deviceTokenString);
+    
+}
+
+-(void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"El registro noficaciones ha fallado \n \n %@",error);
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    UIApplicationState state = application.applicationState;
+    if (state == UIApplicationStateActive) {
+        NSLog(@"Estado activo de las pushNotications");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"pushNotification" object:nil];
+    }
+}
+
+
+-(void) addGoogleAnalitycs{
+    
+//    GAI.sharedInstance().trackUncaughtExceptions = true
+//    GAI.sharedInstance().logger.logLevel = GAILogLevel.Verbose
+//    GAI.sharedInstance().dispatchInterval = 60
+//    GAI.sharedInstance().trackerWithTrackingId(kTrackingId)
+//    var tracker = GAI.sharedInstance().defaultTracker
+
+}
+
+-(void)setupAnalytics{
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].dispatchInterval = 60;
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+    
+    // Iniciamos captura
+    [[GAI sharedInstance] trackerWithTrackingId:UA_ANALYTICS];
+}
+
+
+
 -(void)configureAzure{
     NSURL *urlAzure = [NSURL URLWithString:AZURE_URL];
     self.client = [MSClient clientWithApplicationURL:urlAzure applicationKey:AZURE_KEY];
