@@ -10,6 +10,7 @@
 #import "YWCProfile.h"
 #import "YWClocationModel.h"
 #import "services.h"
+#import "Utils.h"
 @implementation YWCNewsModel
 +(NSArray *)observableKeyNames{
     return @[@"image"];
@@ -110,10 +111,11 @@
         if (!error) {
             
             NSLog(@"resultado --> %@", response);
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+            NSData * data =[NSData dataWithContentsOfURL:location];
+            UIImage *image = [UIImage imageWithData:data];
             self.image = image;
+            [Utils saveWithData:data name:self.imageURL andDirectory:NSCachesDirectory];
         }
-        
         
         
     }];
@@ -121,28 +123,38 @@
     
 }
 -(void)getSasImage{
+    
+    
+    
     if (self.imageURL != nil && self.imageURL.length > 0) {
-        NSString *permissions = @"r";
-        NSString *nameResource = self.imageURL;
-        NSDictionary *item = @{@"containerName":@"news",
-                               @"resourceName":nameResource};
         
-        NSDictionary *params = @{@"blobName":nameResource,
-                                 @"item":item,
-                                 @"permissions":permissions};
-        
-        [self.client invokeAPI:@"geturlblob"
-                          body:nil
-                    HTTPMethod:@"get"
-                    parameters:params
-                       headers:nil
-                    completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                        if (!error) {
-                            NSURL *url = [NSURL URLWithString:[result valueForKey:@"sasUrl"]];
-                            [self handleSaSURLToDownload:url];
-                        }
-                    }];
+        NSData * data = [Utils dataWithNameFile:self.imageURL andDirectory:NSCachesDirectory];
+        if (data != nil) {
+            self.image = [UIImage imageWithData:data];
+        }else{
+            NSString *permissions = @"r";
+            NSString *nameResource = self.imageURL;
+            NSDictionary *item = @{@"containerName":@"news",
+                                   @"resourceName":nameResource};
+            
+            NSDictionary *params = @{@"blobName":nameResource,
+                                     @"item":item,
+                                     @"permissions":permissions};
+            
+            [self.client invokeAPI:@"geturlblob"
+                              body:nil
+                        HTTPMethod:@"get"
+                        parameters:params
+                           headers:nil
+                        completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
+                            if (!error) {
+                                NSURL *url = [NSURL URLWithString:[result valueForKey:@"sasUrl"]];
+                                [self handleSaSURLToDownload:url];
+                            }
+                        }];
+        }
     }
+    
 }
 
 @end

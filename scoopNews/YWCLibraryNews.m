@@ -12,11 +12,27 @@
 @implementation YWCLibraryNews
 
 
--(void)addAllNewsObject:(NSObject *)object{
-    [self.allNews insertObject:object atIndex:self.allNews.count];
+-(void)addAllNewsObject:(YWCNewsModel *)object{
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idNews == %@", object.idNews];
+    NSArray *filteredArray = [self.allNews filteredArrayUsingPredicate:predicate];
+    if (filteredArray.count >0) {
+        YWCNewsModel * model = filteredArray.lastObject;
+        model = object;
+    }else{
+        [self.allNews insertObject:object atIndex:self.allNews.count];
+    }
 }
--(void)addMyNewsObject:(NSObject *)object{
-    [self.myNews insertObject:object atIndex:self.myNews.count];
+-(void)addMyNewsObject:(YWCNewsModel *)object{
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idNews == %@", object.idNews];
+    NSArray *filteredArray = [self.myNews filteredArrayUsingPredicate:predicate];
+    if (filteredArray.count >0) {
+        YWCNewsModel * model = filteredArray.lastObject;
+        model = object;
+    }else{
+        [self.myNews insertObject:object atIndex:self.myNews.count];
+    }
 }
 
 -(id)initWithUser:(YWCProfile *)user{

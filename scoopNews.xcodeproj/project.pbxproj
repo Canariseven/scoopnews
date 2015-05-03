@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321905561AF598FB00F889F2 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 321905551AF598FB00F889F2 /* Utils.m */; };
 		325028B51AF2D5D800E2ED61 /* services.m in Sources */ = {isa = PBXBuildFile; fileRef = 325028B41AF2D5D800E2ED61 /* services.m */; };
 		325028B81AF307D600E2ED61 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 325028B71AF307D600E2ED61 /* UIImage+Resize.m */; };
 		32724B7C1AF158F900DFD5FF /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */; };
@@ -51,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		321905541AF598FB00F889F2 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		321905551AF598FB00F889F2 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		325028B31AF2D5D800E2ED61 /* services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = services.h; sourceTree = "<group>"; };
 		325028B41AF2D5D800E2ED61 /* services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = services.m; sourceTree = "<group>"; };
 		325028B61AF307D600E2ED61 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -191,6 +194,8 @@
 		32E793411AF1584E00F8F558 = {
 			isa = PBXGroup;
 			children = (
+				321905541AF598FB00F889F2 /* Utils.h */,
+				321905551AF598FB00F889F2 /* Utils.m */,
 				32724B7D1AF15A5E00DFD5FF /* settings.h */,
 				325028B31AF2D5D800E2ED61 /* services.h */,
 				325028B41AF2D5D800E2ED61 /* services.m */,
@@ -391,6 +396,7 @@
 				32DE545D1AF2BA5700E4329D /* TPKeyboardAvoidingScrollView.m in Sources */,
 				32EC5D921AF4CA7100952B91 /* YWClocationModel.m in Sources */,
 				32724B871AF1726700DFD5FF /* YWCMyNewsTableViewCell.m in Sources */,
+				321905561AF598FB00F889F2 /* Utils.m in Sources */,
 				32E793561AF1584E00F8F558 /* YWCViewController.m in Sources */,
 				32724B8D1AF173A700DFD5FF /* YWCNewsModel.m in Sources */,
 				32DE545F1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
