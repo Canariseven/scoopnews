@@ -42,7 +42,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self sincronizeView];
-    [self setupKVO];
+    [self.profile setupKVO:self];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -52,7 +52,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self tearDownKVO];
+    [self.profile tearDownKVO:self];
 }
 
 -(void)sincronizeView{
@@ -68,6 +68,7 @@
     }else{
         self.imageProfile.image = self.profile.image;
         self.myNewsButton.enabled = YES;
+        [self.myNewsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
         [self.loginButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [self.profile loadUserAuthInfo];
@@ -113,22 +114,7 @@
     [self.navigationController pushViewController:loginVC animated:YES];
 }
 
--(void)setupKVO{
-    NSArray *arr = [self.profile observableKeyNames];
-    for (NSString *key in arr) {
-        [self.profile addObserver:self
-                       forKeyPath:key
-                          options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                          context:NULL];
-    }
-}
--(void)tearDownKVO{
-    NSArray *arr = [self.profile observableKeyNames];
-    for (NSString *key in arr) {
-        [self.profile removeObserver:self
-                          forKeyPath:key];
-    }
-}
+
 -(void)observeValueForKeyPath:(NSString *)keyPath
                      ofObject:(id)object
                        change:(NSDictionary *)change

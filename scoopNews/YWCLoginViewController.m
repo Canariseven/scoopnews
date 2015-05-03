@@ -29,12 +29,12 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.contentImageView.layer.cornerRadius = self.contentImageView.frame.size.height/2;
-    [self setupKVO];
+    [self.userProfile setupKVO:self];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self tearDownKVO];
+    [self.userProfile tearDownKVO:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,22 +58,22 @@
     }];
 }
 
--(void)setupKVO{
-    NSArray *arr = [self.userProfile observableKeyNames];
-    for (NSString *key in arr) {
-        [self.userProfile addObserver:self
-                           forKeyPath:key
-                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                                                                      context:NULL];
-    }
-}
--(void)tearDownKVO{
-    NSArray *arr = [self.userProfile observableKeyNames];
-    for (NSString *key in arr) {
-        [self.userProfile removeObserver:self
-                              forKeyPath:key];
-    }
-}
+//-(void)setupKVO{
+//    NSArray *arr = [self.userProfile observableKeyNames];
+//    for (NSString *key in arr) {
+//        [self.userProfile addObserver:self
+//                           forKeyPath:key
+//                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+//                                                                      context:NULL];
+//    }
+//}
+//-(void)tearDownKVO{
+//    NSArray *arr = [self.userProfile observableKeyNames];
+//    for (NSString *key in arr) {
+//        [self.userProfile removeObserver:self
+//                              forKeyPath:key];
+//    }
+//}
 
 -(void)observeValueForKeyPath:(NSString *)keyPath
                      ofObject:(id)object

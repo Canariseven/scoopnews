@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		321905561AF598FB00F889F2 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 321905551AF598FB00F889F2 /* Utils.m */; };
 		325028B51AF2D5D800E2ED61 /* services.m in Sources */ = {isa = PBXBuildFile; fileRef = 325028B41AF2D5D800E2ED61 /* services.m */; };
-		325028B81AF307D600E2ED61 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 325028B71AF307D600E2ED61 /* UIImage+Resize.m */; };
 		32724B7C1AF158F900DFD5FF /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */; };
 		32724B7E1AF15A5E00DFD5FF /* settings.h in Resources */ = {isa = PBXBuildFile; fileRef = 32724B7D1AF15A5E00DFD5FF /* settings.h */; };
 		32724B811AF1719E00DFD5FF /* YWCNewsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32724B801AF1719E00DFD5FF /* YWCNewsTableViewController.m */; };
@@ -24,6 +23,8 @@
 		32724B9A1AF18AEB00DFD5FF /* YWCNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */; };
 		32724B9E1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32724B9D1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib */; };
 		3274A5481AF3E090008C4B86 /* YWCMyNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3274A5471AF3E090008C4B86 /* YWCMyNewsTableViewCell.xib */; };
+		32AF01CD1AF6357B001038A3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32AF01CC1AF6357B001038A3 /* QuartzCore.framework */; };
+		32AF01D01AF64DA4001038A3 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AF01CF1AF64DA4001038A3 /* UIImage+Resize.m */; };
 		32DE54511AF2B4A900E4329D /* YWCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE544F1AF2B4A900E4329D /* YWCLoginViewController.m */; };
 		32DE54521AF2B4A900E4329D /* YWCLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DE54501AF2B4A900E4329D /* YWCLoginViewController.xib */; };
 		32DE545C1AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DE54551AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m */; };
@@ -56,8 +57,6 @@
 		321905551AF598FB00F889F2 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		325028B31AF2D5D800E2ED61 /* services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = services.h; sourceTree = "<group>"; };
 		325028B41AF2D5D800E2ED61 /* services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = services.m; sourceTree = "<group>"; };
-		325028B61AF307D600E2ED61 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		325028B71AF307D600E2ED61 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		32724B7B1AF158F900DFD5FF /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMobileServices.framework; path = scoopNews/WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		32724B7D1AF15A5E00DFD5FF /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settings.h; sourceTree = "<group>"; };
 		32724B7F1AF1719E00DFD5FF /* YWCNewsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCNewsTableViewController.h; sourceTree = "<group>"; };
@@ -79,6 +78,9 @@
 		32724B991AF18AEB00DFD5FF /* YWCNewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCNewViewController.xib; sourceTree = "<group>"; };
 		32724B9D1AF18B6200DFD5FF /* YWCGeneralNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCGeneralNewsTableViewCell.xib; sourceTree = "<group>"; };
 		3274A5471AF3E090008C4B86 /* YWCMyNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCMyNewsTableViewCell.xib; sourceTree = "<group>"; };
+		32AF01CC1AF6357B001038A3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		32AF01CE1AF64DA4001038A3 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "../UIImage+Resize.h"; sourceTree = "<group>"; };
+		32AF01CF1AF64DA4001038A3 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "../UIImage+Resize.m"; sourceTree = "<group>"; };
 		32DE544E1AF2B4A900E4329D /* YWCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWCLoginViewController.h; sourceTree = "<group>"; };
 		32DE544F1AF2B4A900E4329D /* YWCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWCLoginViewController.m; sourceTree = "<group>"; };
 		32DE54501AF2B4A900E4329D /* YWCLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YWCLoginViewController.xib; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32AF01CD1AF6357B001038A3 /* QuartzCore.framework in Frameworks */,
 				32724B7C1AF158F900DFD5FF /* WindowsAzureMobileServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,8 +134,8 @@
 		325028B91AF307E100E2ED61 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				325028B61AF307D600E2ED61 /* UIImage+Resize.h */,
-				325028B71AF307D600E2ED61 /* UIImage+Resize.m */,
+				32AF01CE1AF64DA4001038A3 /* UIImage+Resize.h */,
+				32AF01CF1AF64DA4001038A3 /* UIImage+Resize.m */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 		32E793411AF1584E00F8F558 = {
 			isa = PBXGroup;
 			children = (
+				32AF01CC1AF6357B001038A3 /* QuartzCore.framework */,
 				321905541AF598FB00F889F2 /* Utils.h */,
 				321905551AF598FB00F889F2 /* Utils.m */,
 				32724B7D1AF15A5E00DFD5FF /* settings.h */,
@@ -402,6 +406,7 @@
 				32DE545F1AF2BA5700E4329D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				32DE54511AF2B4A900E4329D /* YWCLoginViewController.m in Sources */,
 				32E793531AF1584E00F8F558 /* AppDelegate.m in Sources */,
+				32AF01D01AF64DA4001038A3 /* UIImage+Resize.m in Sources */,
 				32EC5D8E1AF4C92000952B91 /* YWCMapViewController.m in Sources */,
 				32724B811AF1719E00DFD5FF /* YWCNewsTableViewController.m in Sources */,
 				32724B8A1AF172E700DFD5FF /* YWCNewViewController.m in Sources */,
@@ -411,7 +416,6 @@
 				32724B911AF1746A00DFD5FF /* YWCProfile.m in Sources */,
 				32724B941AF174CD00DFD5FF /* YWCLibraryNews.m in Sources */,
 				32DE545C1AF2BA5700E4329D /* TPKeyboardAvoidingCollectionView.m in Sources */,
-				325028B81AF307D600E2ED61 /* UIImage+Resize.m in Sources */,
 				32724B841AF1720A00DFD5FF /* YWCGeneralNewsTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

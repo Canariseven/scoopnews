@@ -23,7 +23,8 @@
                author:(YWCProfile *)author
              location:(YWClocationModel *)location
          creationDate:(NSString *)creationDate
-               client:(MSClient *)client{
+               client:(MSClient *)client
+                image:(UIImage *)image{
     if (self = [super init]) {
         _titleNew = title;
         _textNew = textNew;
@@ -34,6 +35,7 @@
         _location = location;
         _creationDate = creationDate;
         _client = client;
+        _image = image;
     }
     return self;
 }
@@ -54,7 +56,8 @@
                                                         author:author
                                                       location:loc
                                                   creationDate:item[@"creationDate"]
-                                                        client:client];
+                                                        client:client
+                                                         image:nil];
     new.idNews = item[@"id"];
     new.numberOfVotes = [[NSString stringWithFormat:@"%@",item[@"numberofvotes"]] intValue];
     
@@ -74,7 +77,8 @@
                           @"latitude":[NSString stringWithFormat:@"%f",model.location.latitude],
                           @"longitude":[NSString stringWithFormat:@"%f",model.location.longitude],
                           @"address":model.location.address,
-                          @"creationDate":model.creationDate};
+                          @"creationDate":model.creationDate,
+                          @"numberofvotes":@0};
     return dict;
 }
 -(void)downloadImageWithURL:(NSURL *)sasURL {
@@ -154,7 +158,24 @@
                         }];
         }
     }
-    
+}
+
+-(void)setupKVO:(id)object{
+    NSArray * arr = [YWCNewsModel observableKeyNames];
+    for (NSString *key in arr) {
+        [self addObserver:object
+               forKeyPath:key
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                  context:NULL];
+    }
+}
+-(void)tearDownKVO:(id)object{
+    if (self.observationInfo !=nil) {
+        NSArray * arr = [YWCNewsModel observableKeyNames];
+        for (NSString *key in arr) {
+            [self removeObserver:object forKeyPath:key];
+        }
+    }
 }
 
 @end

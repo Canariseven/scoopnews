@@ -32,6 +32,7 @@
     if (self = [super initWithNibName:nil bundle:nil]) {
         _userProfile = library.user;
         _libraryNews = library;
+
     }
     return self;
 }
@@ -51,6 +52,7 @@
 
 -(void)sincronizeView{
     if (self.model == nil) {
+        _model = [[YWCNewsModel alloc]init];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choosePhoto:)];
         [self.image addGestureRecognizer:tap];
         self.image.userInteractionEnabled = YES;
@@ -64,8 +66,7 @@
             self.location = [[YWClocationModel alloc]init];
         }
         self.location.locationManager.delegate = self;
-        
-        
+        self.voteButton.hidden = YES;
     }else{
         self.publishButton.hidden = true;
         self.segmentValorator.hidden = false;
@@ -94,12 +95,14 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setupKVO];
+    [self.userProfile setupKVO:self];
+    [self.model setupKVO:self];
     [self sincronizeView];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self tearDownKVO];
+    [self.model tearDownKVO:self];
+    [self.userProfile tearDownKVO:self];
 }
 
 - (void)choosePhoto:(id)sender
@@ -118,19 +121,37 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = info[UIImagePickerControllerOriginalImage];
+
+    __block UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize screenSize = CGSizeMake(screenBounds.size.width / screenScale, screenBounds.size.height / screenScale);
+    
+    
+    // Hay que salir de aquí, androidero el último
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        img = [img resizedImage:screenSize interpolationQuality:kCGInterpolationMedium];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"dd_m_yyyy_HH_mm_ss"];
+        NSString *dateSTR = [dateFormatter stringFromDate:[NSDate date]];
+        NSString *nameResource = [NSString stringWithFormat:@"%@_%@.jpg",self.userProfile.idUser,dateSTR];
+        self.sasURL = nameResource;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.image.image = img;
+            self.model.image = img;
+        });
+    });
+    
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self obtenerImage:image];
+
+  
     
 }
 -(void)obtenerImage:(UIImage *)image{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"dd_m_yyyy_HH_mm_ss"];
-    NSString *dateSTR = [dateFormatter stringFromDate:[NSDate date]];
-    
-    NSString *nameResource = [NSString stringWithFormat:@"%@_%@.jpg",self.userProfile.idUser,dateSTR];
-    NSDictionary *item = @{@"containerName":@"news",@"resourceName":nameResource};
-    NSDictionary *params = @{@"blobName":nameResource,@"item":item,@"permissions":@"w"};
+   
+    NSDictionary *item = @{@"containerName":@"news",@"resourceName":self.sasURL};
+    NSDictionary *params = @{@"blobName":self.sasURL,@"item":item,@"permissions":@"w"};
     
     [self.libraryNews.client invokeAPI:@"geturlblob"
                                   body:nil
@@ -138,7 +159,6 @@
                             parameters:params
                                headers:nil
                             completion:^(id result, NSHTTPURLResponse *response, NSError *error) {
-                                self.sasURL = nameResource;
                                 NSURL *url = [NSURL URLWithString:[result valueForKey:@"sasUrl"]];
                                 NSLog(@"%@",url);
                                 [self uploadImage:image withSasURL:url];
@@ -194,14 +214,17 @@ didCompleteWithError:(NSError *)error{
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self finishUploadSincronizeViews];
+        self.title = @"Se ha subido la noticia correctamente";
     });
     
     if (!error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"%@",task.response);
+
+            [self.navigationController popViewControllerAnimated:YES];
         });
     } else {
-        //error
+        self.title = @"Error al subir la noticia";
     }
 }
 
@@ -234,15 +257,16 @@ didCompleteWithError:(NSError *)error{
                                                 author:self.userProfile
                                               location:self.location
                                           creationDate:self.dateNew.text
-                                                client:self.userProfile.client];
+                                                client:self.userProfile.client
+                                                 image:self.image.image];
+
     MSTable *table = [[MSTable alloc]initWithName:@"news" client:self.libraryNews.client];
     NSDictionary *dict = [YWCNewsModel dictionaryWithModel:self.model];
     
     [table insert:dict completion:^(NSDictionary *item, NSError *error) {
         if (!error) {
-            NSUInteger index = [self.libraryNews.myNews count];
-            [self.libraryNews.myNews insertObject:self.model atIndex:index];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self obtenerImage:self.image.image];
+
         }else{
             NSLog(@"Error %@",error);
         }
@@ -252,8 +276,8 @@ didCompleteWithError:(NSError *)error{
 
 - (IBAction)sendVote:(id)sender {
     NSNumber * puntos =[NSNumber numberWithInteger:self.segmentValorator.selectedSegmentIndex + 1];
-    self.segmentValorator.hidden = YES;
-    
+    self.voteButton.hidden = YES;
+    self.segmentValorator.userInteractionEnabled = NO;
     NSDictionary *dict = @{@"rating":puntos,
                            @"idNews":self.model.idNews};
     
@@ -288,34 +312,7 @@ didCompleteWithError:(NSError *)error{
     self.location.locationManager = nil;
 }
 
--(void)setupKVO{
-    NSArray *arr = [self.userProfile observableKeyNames];
-    for (NSString *key in arr) {
-        [self.userProfile addObserver:self
-                           forKeyPath:key
-                              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                              context:NULL];
-    }
-    
-    [self.model addObserver:self
-                 forKeyPath:@"image"
-                    options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                    context:NULL];
-}
--(void)tearDownKVO{
-    NSArray *arr = [self.userProfile observableKeyNames];
-    for (NSString *key in arr) {
-        [self.userProfile removeObserver:self
-                              forKeyPath:key];
-        
-    }
-    
-    
-    if (self.model.observationInfo != nil) {
-        [self.model removeObserver:self
-                        forKeyPath:@"image"];
-    }
-}
+
 -(void)observeValueForKeyPath:(NSString *)keyPath
                      ofObject:(id)object
                        change:(NSDictionary *)change

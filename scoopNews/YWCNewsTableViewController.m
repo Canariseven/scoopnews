@@ -7,7 +7,6 @@
 //
 
 #import "YWCNewsTableViewController.h"
-
 #import "YWCGeneralNewsTableViewCell.h"
 #import "YWCMyNewsTableViewCell.h"
 #import "YWCNewsModel.h"
@@ -40,8 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     if ([self.modePresent  isEqual: @"ALLNEWS"]) {
         UINib *nib = [UINib nibWithNibName:@"YWCGeneralNewsTableViewCell" bundle:nil];
         [self.tableView registerNib:nib forCellReuseIdentifier:@"generalCellID"];
@@ -55,14 +53,29 @@
                                                                             action:@selector(addNew:)];
         self.navigationItem.rightBarButtonItem = add;
     }
+ 
+    
+}
+-(void)refresFromServer:(UIRefreshControl *)refreshControl {
+    [refreshControl endRefreshing];
+    if ([self.modePresent  isEqual: @"ALLNEWS"]) {
+        [self.arrayModel getAllNewsFromAzureWithClient:self.client andTable:self.table];
+    }else{
+        [self.arrayModel getMyNewsFromAzureWithClient:self.client andTable:self.table];
+    }
     
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        [refreshControl addTarget:self action:@selector(refresFromServer:) forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+    
     [self.tableView reloadData];
 }
 -(void)viewDidDisappear:(BOOL)animated{
@@ -124,7 +137,9 @@
     [self.navigationController pushViewController:newVC animated:YES];
     
 }
-
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+   
+}
 
 #pragma mark - YWCLibraryNewsDelegate
 -(void)libraryNews:(YWCLibraryNews *)libraryNews{

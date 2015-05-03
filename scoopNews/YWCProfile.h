@@ -16,7 +16,7 @@
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic, strong) MSClient *client;
 @property (nonatomic, strong) UIImage *image;
--(NSArray *)observableKeyNames;
++(NSArray *)observableKeyNames;
 
 -(id)initWithName:(NSString *)nameUser
            idUser:(NSString *)idUser
@@ -28,4 +28,6 @@
 -(void)getUserInfo;
 -(void)deleteUserOnDefault;
 -(void)downloadImage;
+-(void)setupKVO:(id)object;
+-(void)tearDownKVO:(id)object;
 @end

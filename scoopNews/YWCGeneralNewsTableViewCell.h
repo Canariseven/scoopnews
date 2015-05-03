@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *titleNew;
 @property (weak, nonatomic) IBOutlet UILabel *authorNew;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
 @property (nonatomic, strong) YWCNewsModel *model;
 -(void)sincronizeView;
 @end

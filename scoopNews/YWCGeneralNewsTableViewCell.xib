@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,37 +14,66 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7F7-Jg-k3v">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7F7-Jg-k3v">
                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="74" id="Clb-fp-hLb"/>
+                            <constraint firstAttribute="height" constant="74" id="h9c-cF-WPI"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Titulo noticia" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bTR-vx-a0u">
-                        <rect key="frame" x="82" y="8" width="194" height="26"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Titulo noticia" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="bTR-vx-a0u">
+                        <rect key="frame" x="82" y="8" width="163" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="163" id="Ih1-7f-fpw"/>
+                            <constraint firstAttribute="height" constant="26" id="NE3-Az-mBa"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="19"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8SF-PA-6UE">
-                        <rect key="frame" x="82" y="45" width="194" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="8SF-PA-6UE">
+                        <rect key="frame" x="82" y="45" width="163" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="163" id="lHM-9H-1Ii"/>
+                            <constraint firstAttribute="height" constant="21" id="wDx-sT-nKK"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="19"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wtx-mA-vWs">
+                        <rect key="frame" x="262" y="12" width="50" height="50"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="NF4-l9-BXk"/>
+                            <constraint firstAttribute="height" constant="50" id="csi-OZ-iNS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="17"/>
+                        <color key="textColor" red="0.094221301376819611" green="0.48781818151473999" blue="0.73891341686248779" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Wtx-mA-vWs" firstAttribute="trailing" secondItem="KSa-ov-TBn" secondAttribute="trailingMargin" id="FyY-xc-lRJ"/>
+                    <constraint firstItem="bTR-vx-a0u" firstAttribute="leading" secondItem="7F7-Jg-k3v" secondAttribute="trailing" constant="8" id="XBQ-HG-lu8"/>
+                    <constraint firstItem="Wtx-mA-vWs" firstAttribute="top" secondItem="KSa-ov-TBn" secondAttribute="topMargin" constant="4" id="Z1C-TA-La5"/>
+                    <constraint firstItem="7F7-Jg-k3v" firstAttribute="top" secondItem="KSa-ov-TBn" secondAttribute="topMargin" constant="-8" id="ZQk-n9-rRg"/>
+                    <constraint firstItem="bTR-vx-a0u" firstAttribute="top" secondItem="KSa-ov-TBn" secondAttribute="topMargin" id="bPp-uK-n72"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="7F7-Jg-k3v" secondAttribute="bottom" constant="-8" id="dAm-OK-e6W"/>
+                    <constraint firstItem="8SF-PA-6UE" firstAttribute="bottom" secondItem="KSa-ov-TBn" secondAttribute="bottomMargin" id="gMl-bs-Gvq"/>
+                    <constraint firstItem="7F7-Jg-k3v" firstAttribute="leading" secondItem="KSa-ov-TBn" secondAttribute="leadingMargin" constant="-8" id="iuv-MM-7Rn"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Wtx-mA-vWs" secondAttribute="bottom" constant="4" id="uds-zv-akb"/>
+                    <constraint firstItem="8SF-PA-6UE" firstAttribute="leading" secondItem="7F7-Jg-k3v" secondAttribute="trailing" constant="8" id="zsg-Q9-cbY"/>
+                </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.094221301376819611" green="0.48781818151473999" blue="0.73891341686248779" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="authorNew" destination="8SF-PA-6UE" id="T60-n1-bl5"/>
                 <outlet property="image" destination="7F7-Jg-k3v" id="0HW-RH-vGT"/>
+                <outlet property="ratingLabel" destination="Wtx-mA-vWs" id="h5b-6Y-kqj"/>
                 <outlet property="titleNew" destination="bTR-vx-a0u" id="JBN-LI-Rjf"/>
             </connections>
+            <point key="canvasLocation" x="309" y="444.5"/>
         </tableViewCell>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

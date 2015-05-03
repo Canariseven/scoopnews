@@ -8,7 +8,7 @@
 
 #import "YWCMyNewsTableViewCell.h"
 #import "YWCNewsModel.h"
-
+#import "YWCProfile.h"
 @implementation YWCMyNewsTableViewCell
 
 -(void)sincronizeView{
@@ -16,11 +16,11 @@
     if (self.model.numberOfVotes == 0) {
         self.ratingLabel.text = @"0";
     }else{
-        self.ratingLabel.text = [NSString stringWithFormat:@"%f.0",self.model.rating/self.model.numberOfVotes ];
+        self.ratingLabel.text = [NSString stringWithFormat:@"%.1f",self.model.rating/self.model.numberOfVotes ];
     }
-    
+    self.authorLabel.text = self.model.author.nameUser;
     self.image.image = self.model.image;
-    [self setupKVO];
+    [self.model setupKVO:self];
 }
 
 - (void)awakeFromNib {
@@ -28,7 +28,7 @@
     
 }
 -(void)dealloc{
-    [self tearDownKVO];
+    [self.model tearDownKVO:self];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -36,24 +36,7 @@
     
     // Configure the view for the selected state
 }
--(void)setupKVO{
-    
-    
-    [self.model addObserver:self
-                 forKeyPath:@"image"
-                    options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                    context:NULL];
-    
-}
--(void)tearDownKVO{
-    
-    if (self.model.observationInfo != nil) {
-        [self.model removeObserver:self
-                        forKeyPath:@"image"];
-    }
-    
-    
-}
+
 -(void)observeValueForKeyPath:(NSString *)keyPath
                      ofObject:(id)object
                        change:(NSDictionary *)change
@@ -71,7 +54,7 @@
 }
 
 -(void) cleanUp{
-    [self tearDownKVO];
+    [self.model tearDownKVO:self];
     self.image.image = nil;
     self.titleNew.text = nil;
     self.ratingLabel.text = nil;

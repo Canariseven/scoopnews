@@ -10,7 +10,7 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "services.h"
 @implementation YWCProfile
--(NSArray *)observableKeyNames{
++(NSArray *)observableKeyNames{
     return @[@"nameUser",@"image"];
 }
 
@@ -86,6 +86,24 @@
 -(void)deleteUserOnDefault{
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"userID"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"tokenFB"];
+}
+
+-(void)setupKVO:(id)object{
+    NSArray * arr = [YWCProfile observableKeyNames];
+    for (NSString *key in arr) {
+        [self addObserver:object
+               forKeyPath:key
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                  context:NULL];
+    }
+}
+-(void)tearDownKVO:(id)object{
+    if (self.observationInfo !=nil) {
+        NSArray * arr = [YWCProfile observableKeyNames];
+        for (NSString *key in arr) {
+            [self removeObserver:object forKeyPath:key];
+        }
+    }
 }
 
 @end

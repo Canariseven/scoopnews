@@ -38,7 +38,10 @@
                author:(YWCProfile *)author
              location:(YWClocationModel *)location
          creationDate:(NSString *)creationDate
-               client:(MSClient *)client;
+               client:(MSClient *)client
+                image:(UIImage *)image;
 
 -(void)getSasImage;
+-(void)setupKVO:(id)object;
+-(void)tearDownKVO:(id)object;
 @end
